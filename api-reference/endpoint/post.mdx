@@ -1,0 +1,64 @@
+---
+title: "Get a Single Post"
+description: "Retrieves a single post by its slug."
+---
+
+<RequestExample>
+```bash cURL
+curl "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+```
+
+```javascript Node.js
+const fetch = require("node-fetch");
+
+fetch(
+  "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+)
+  .then((res) => res.json())
+  .then((json) => console.log(json))
+  .catch((err) => console.error("error:" + err));
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "post": {
+    "id": "clt92n38p000108l48zkj41an",
+    "slug": "introducing-marblecms",
+    "title": "Introducing MarbleCMS",
+    "content": "<h1>Hello World!</h1><p>This is the content of the post.</p>",
+    "description": "The modern headless CMS for modern web applications.",
+    "coverImage": "...",
+    "publishedAt": "2024-03-05T00:00:00.000Z",
+    "authors": [
+      {
+        "id": "clt92f96m000008l4gken6v2t",
+        "name": "John Doe",
+        "image": "..."
+      }
+    ],
+    "category": {
+      "id": "clt92hrnp000208l43kbo28d0",
+      "name": "Announcements",
+      "slug": "announcements"
+    },
+    "tags": [
+      {
+        "id": "clt92k3c1000408l47h5f0b5y",
+        "name": "Product",
+        "slug": "product"
+      }
+    ],
+    "attribution": null
+  }
+}
+```
+</ResponseExample>
+
+### Path Parameters
+
+<ParamField path="slug" type="string" required>
+  The slug of the post to retrieve.
+</ParamField>{" "}

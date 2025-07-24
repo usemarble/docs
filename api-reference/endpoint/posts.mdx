@@ -1,0 +1,68 @@
+---
+title: "Get All Posts"
+description: "Retrieves a list of all posts in a workspace."
+---
+
+<RequestExample>
+```bash cURL
+curl "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts"
+```
+
+```javascript Node.js
+const fetch = require("node-fetch");
+
+fetch("https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts")
+  .then((res) => res.json())
+  .then((json) => console.log(json))
+  .catch((err) => console.error("error:" + err));
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "posts": [
+    {
+      "id": "clt92n38p000108l48zkj41an",
+      "slug": "introducing-marblecms",
+      "title": "Introducing MarbleCMS",
+      "content": "...",
+      "description": "The modern headless CMS for modern web applications.",
+      "coverImage": "...",
+      "publishedAt": "2024-03-05T00:00:00.000Z",
+      "authors": [
+        {
+          "id": "clt92f96m000008l4gken6v2t",
+          "name": "John Doe",
+          "image": "..."
+        }
+      ],
+      "category": {
+        "id": "clt92hrnp000208l43kbo28d0",
+        "name": "Announcements",
+        "slug": "announcements"
+      },
+      "tags": [
+        {
+          "id": "clt92k3c1000408l47h5f0b5y",
+          "name": "Product",
+          "slug": "product"
+        }
+      ],
+      "attribution": null
+    }
+  ]
+}
+```
+</ResponseExample>
+
+### Query Parameters
+
+<ParamField query="limit" type="integer" default="10">
+  The number of items to return.
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+  The number of items to skip.
+</ParamField>{" "}

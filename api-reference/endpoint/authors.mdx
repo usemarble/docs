@@ -1,0 +1,34 @@
+---
+title: "Get All Authors"
+description: "Retrieves a list of all authors in a workspace."
+---
+
+<RequestExample>
+```bash cURL
+curl "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/authors"
+```
+
+```javascript Node.js
+const fetch = require("node-fetch");
+
+fetch("https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/authors")
+  .then((res) => res.json())
+  .then((json) => console.log(json))
+  .catch((err) => console.error("error:" + err));
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "authors": [
+    {
+      "id": "clt92f96m000008l4gken6v2t",
+      "name": "John Doe",
+      "image": "..."
+    }
+  ]
+}
+```
+</ResponseExample>

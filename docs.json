@@ -15,11 +15,15 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["introduction", "quickstart", "development"]
+            "pages": ["introduction", "quickstart"]
           },
           {
             "group": "Integrations",
             "pages": ["integrations/astro", "integrations/nextjs"]
+          },
+          {
+            "group": "Features",
+            "pages": ["guides/webhooks"]
           }
         ]
       },
@@ -27,16 +31,17 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Introduction",
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Endpoints",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoint/posts",
+              "api-reference/endpoint/post",
+              "api-reference/endpoint/tags",
+              "api-reference/endpoint/categories",
+              "api-reference/endpoint/authors"
             ]
           }
         ]

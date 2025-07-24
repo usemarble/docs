@@ -1,33 +1,46 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "Introduction"
+description: "Welcome to the MarbleCMS API."
 ---
 
+The MarbleCMS API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes and verbs.
+
+## Base URL
+
+All API access is over HTTPS and is accessed from the `api.marblecms.com` domain. All data is sent and received as JSON.
+
+The structure of a request is: `https://api.marblecms.com/:workspaceId/:resource`
+
+## Trying it out
+
+Throughout this documentation, we use an example workspace ID: `cm6ytuq9x0000i803v0isidst`. You can use this ID to make live API requests and see real responses without needing an account.
+
+For example, to get all posts from the example workspace:
+
+```bash
+$ curl https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts
+```
+
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  The example workspace (`cm6ytuq9x0000i803v0isidst`) does not require
+  authentication. When you are ready to use your own workspace, you will need to
+  use API key authentication.
 </Note>
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+All timestamps are in UTC ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+> To authorize, use this code:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```bash
+# With shell, you can just pass the correct header with each request
+curl "https://api.marblecms.com/YOUR_WORKSPACE_ID/posts" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 ```
+
+> Make sure to replace `YOUR_WORKSPACE_ID` and `YOUR_API_KEY` with your credentials.
+
+When you're ready to use your own workspace, MarbleCMS authenticates your API requests using your account’s API keys. If you do not include your key when making an API request, or use one that is incorrect or outdated, MarbleCMS returns an error.
+
+Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.

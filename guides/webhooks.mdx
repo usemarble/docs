@@ -1,13 +1,34 @@
 ---
-title: 'Webhooks'
-description: 'Webhooks are a way to notify you when certain events happen in your workspace'
+title: Webhooks
+description: Using webhooks to trigger builds and automate workflows.
 ---
 
-## Webhooks
+Webhooks provide a powerful way to keep your site's content fresh and automate workflows. When an event occurs in your MarbleCMS workspace (like publishing a post), we can send an HTTP POST payload to a URL you configure.
 
-Webhooks are a way to notify you when certain events happen in your workspace this is useful for performing actions such as sending out newsletters, revalidating pages, or even sending a Slack notification.
+<Info>
+  Webhooks are currently under active development. The data structure and
+  available events are subject to change. This guide outlines the intended
+  functionality.
+</Info>
 
-### Creating a Webhook
+## Use Cases
 
-To create a webhook, you can go to the webhooks page in the sidebar and click on the "Create Webhook" button.
+### Content Revalidation
 
+For statically generated sites (SSG) built with frameworks like Next.js, Astro, or Nuxt, content is fetched when you build your site. If you update a post in MarbleCMS, the change won't be live until you trigger a new deployment.
+
+Webhooks solve this by allowing you to trigger a revalidation of your site's content.
+
+Frameworks like Next.js provide built-in solutions for this, such as [Incremental Static Regeneration (ISR)](https://nextjs.org/docs/app/guides/incremental-static-regeneration), which can be triggered on-demand by a webhook for instant updates.
+
+### Automating Workflows
+
+Webhooks can also be used to automate other tasks. For example, you could create a serverless function that listens for a `post.published` event from a MarbleCMS webhook.
+
+When a new post is published, the webhook sends the post data to your function, which can then:
+
+- Send a newsletter to your subscribers with the new post.
+- Share the post on social media.
+- Sync the content to another service or backup location.
+
+By listening for specific events, you can build powerful, event-driven automations tailored to your needs.

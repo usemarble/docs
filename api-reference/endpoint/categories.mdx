@@ -1,0 +1,39 @@
+---
+title: "Get All Categories"
+description: "Retrieves a list of all categories in a workspace."
+---
+
+<RequestExample>
+```bash cURL
+curl "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/categories"
+```
+
+```javascript Node.js
+const fetch = require("node-fetch");
+
+fetch("https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/categories")
+  .then((res) => res.json())
+  .then((json) => console.log(json))
+  .catch((err) => console.error("error:" + err));
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "categories": [
+    {
+      "id": "clt92hrnp000208l43kbo28d0",
+      "name": "Announcements",
+      "slug": "announcements"
+    },
+    {
+      "id": "clt92hrnp000308l4ajp74b32",
+      "name": "Tutorials",
+      "slug": "tutorials"
+    }
+  ]
+}
+```
+</ResponseExample>

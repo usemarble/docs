@@ -1,11 +1,145 @@
 ---
-title: 'Next.js'
-description: 'Integrate MarbleCMS in your Next.js application'
+title: "Next.js"
+description: "Integrate MarbleCMS in your Next.js application"
 ---
 
+Getting your content to your Next.js site is as simple as making an API request to the MarbleCMS API. This guide will walk you through setting up a blog with MarbleCMS and Next.js.
 
-## Setup
+If you want to get started quickly, you can clone our [Next.js blog template](https://github.com/taqh/nextjs-example).
 
-To integrate MarbleCMS in your Next.js application, you first need to create a Next.js app. If you don't have one, you can check out the [Next.js documentation](https://nextjs.org/docs/getting-started) to get started. or use our [nextjs blog template](https://github.com/taqh/nextjs-example) to get started the setup intructions are in the Readme.
+<Steps>
+<Step title="Set up environment variables">
+First, you'll need to add your MarbleCMS API URL and Workspace Key to your environment variables. Create a `.env.local` file in the root of your Next.js project and add the following:
 
+```bash .env.local
+MARBLE_API_URL=https://api.marblecms.com
+MARBLE_WORKSPACE_KEY=your_workspace_key_here
+```
 
+<Warning>
+  **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
+  Your environment variables should only be accessed on the server during the
+  build process. For client-side updates, use [webhooks](/guides/webhooks) to
+  trigger rebuilds.
+</Warning>
+
+<Tip>
+You can find your Workspace Key in your MarbleCMS dashboard under the settings for your workspace.
+</Tip>
+</Step>
+
+<Step title="Create API utility functions">
+To make it easier to fetch data from MarbleCMS, you can create a utility file to wrap your API calls. This keeps your data-fetching logic organized and reusable.
+
+Create a file at `lib/query.js` (or `.ts` if you're using TypeScript).
+
+```javascript lib/query.js
+const url = process.env.MARBLE_API_URL;
+const key = process.env.MARBLE_WORKSPACE_KEY;
+
+export async function getPosts() {
+  try {
+    const raw = await fetch(`${url}/${key}/posts`);
+    const data = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getSinglePost(slug) {
+  try {
+    const raw = await fetch(`${url}/${key}/posts/${slug}`);
+    const data = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getTags() {
+  try {
+    const raw = await fetch(`${url}/${key}/tags`);
+    const data = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getCategories() {
+  try {
+    const raw = await fetch(`${url}/${key}/categories`);
+    const data = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getAuthors() {
+  try {
+    const raw = await fetch(`${url}/${key}/authors`);
+    const data = await raw.json();
+    return data;
+  } catch (error)
+    console.log(error);
+  }
+}
+```
+
+</Step>
+
+<Step title="Display a list of posts">
+Now you can use the `getPosts` function in a Next.js page to fetch and display a list of your blog posts. For example, in `app/blog/page.jsx`:
+
+```jsx app/blog/page.jsx
+import { getPosts } from "@/lib/query";
+
+// Revalidate this page every hour
+export const revalidate = 3600;
+
+export default async function BlogPage() {
+  const { posts } = await getPosts();
+
+  return (
+    <section>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <a href={`/blog/${post.slug}`}>{post.title}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+```
+
+</Step>
+
+<Step title="Display a single post">
+To display a single post, you can create a dynamic route in Next.js, for example at `app/blog/[slug]/page.jsx`. This page will use the `getSinglePost` function to fetch the content for a specific post.
+
+```jsx app/blog/[slug]/page.jsx
+import { getSinglePost } from "@/lib/query";
+
+export default async function PostPage({ params }) {
+  const { post } = await getSinglePost(params.slug);
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <article dangerouslySetInnerHTML={{ __html: post.content }} />
+    </div>
+  );
+}
+```
+
+<Info>
+  **A note on `dangerouslySetInnerHTML`**
+  
+  We use `dangerouslySetInnerHTML` to render the HTML content of your post. MarbleCMS sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
+</Info>
+</Step>
+</Steps>
