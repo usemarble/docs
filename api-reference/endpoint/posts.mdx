@@ -5,13 +5,13 @@ description: "Retrieves a list of all posts in a workspace."
 
 <RequestExample>
 ```bash cURL
-curl "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts"
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts"
 ```
 
 ```javascript Node.js
 const fetch = require("node-fetch");
 
-fetch("https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts")
+fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
   .then((res) => res.json())
   .then((json) => console.log(json))
   .catch((err) => console.error("error:" + err));

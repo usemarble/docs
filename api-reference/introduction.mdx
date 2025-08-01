@@ -9,7 +9,7 @@ The MarbleCMS API is organized around REST. Our API has predictable resource-ori
 
 All API access is over HTTPS and is accessed from the `api.marblecms.com` domain. All data is sent and received as JSON.
 
-The structure of a request is: `https://api.marblecms.com/:workspaceId/:resource`
+The structure of a request is: `https://api.marblecms.com/v1/:workspaceId/:resource`
 
 ## Trying it out
 
@@ -18,7 +18,7 @@ Throughout this documentation, we use an example workspace ID: `cm6ytuq9x0000i80
 For example, to get all posts from the example workspace:
 
 ```bash
-$ curl https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts
+$ curl https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts
 ```
 
 <Note>
@@ -35,7 +35,7 @@ All timestamps are in UTC ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
 
 ```bash
 # With shell, you can just pass the correct header with each request
-curl "https://api.marblecms.com/YOUR_WORKSPACE_ID/posts" \
+curl "https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

@@ -5,14 +5,14 @@ description: "Retrieves a single post by its slug."
 
 <RequestExample>
 ```bash cURL
-curl "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
 ```
 
 ```javascript Node.js
 const fetch = require("node-fetch");
 
 fetch(
-  "https://api.marblecms.com/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+  "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
 )
   .then((res) => res.json())
   .then((json) => console.log(json))
