@@ -15,15 +15,15 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["introduction", "quickstart"]
+            "pages": ["content/guides/introduction", "content/guides/quickstart"]
           },
           {
             "group": "Integrations",
-            "pages": ["integrations/astro", "integrations/nextjs"]
+            "pages": ["content/guides/integrations/astro", "content/guides/integrations/nextjs"]
           },
           {
             "group": "Features",
-            "pages": ["guides/webhooks"]
+            "pages": ["content/guides/webhooks"]
           }
         ]
       },
@@ -32,17 +32,21 @@
         "groups": [
           {
             "group": "Introduction",
-            "pages": ["api-reference/introduction"]
+            "pages": ["content/api-reference/introduction"]
           },
           {
             "group": "Endpoints",
             "pages": [
-              "api-reference/endpoint/posts",
-              "api-reference/endpoint/post",
-              "api-reference/endpoint/tags",
-              "api-reference/endpoint/categories",
-              "api-reference/endpoint/authors"
+              "content/api-reference/endpoint/posts",
+              "content/api-reference/endpoint/post",
+              "content/api-reference/endpoint/tags",
+              "content/api-reference/endpoint/categories",
+              "content/api-reference/endpoint/authors"
             ]
+          },
+          {
+            "group": "Miscellaneous",
+            "pages": ["content/api-reference/pagination"]
           }
         ]
       }
