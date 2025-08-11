@@ -1,25 +1,25 @@
 # MarbleCMS Documentation
 
-Documentation for the MarbleCMS API built with [Mintlify](https://mintlify.com).
+Documentation for the Marblecms API built with [Mintlify](https://mintlify.com).
 
 ## Project Structure
 
 ```
 docs/
-├── content/                    # Documentation content
+├── content/                   # Documentation content
 │   ├── api-reference/         # API endpoint documentation
 │   │   ├── endpoint/          # Individual endpoint docs
 │   │   ├── introduction.mdx   # API overview
 │   │   └── pagination.mdx     # Pagination guide
-│   └── guides/               # Integration guides and tutorials
-│       ├── integrations/     # Framework-specific guides
-│       ├── introduction.mdx  # Getting started
-│       └── quickstart.mdx    # Quick setup guide
-├── images/                   # Documentation images and assets
-├── logo/                     # Brand assets
-├── snippets/                 # Reusable content snippets
-├── docs.json                 # Mintlify configuration
-└── README.md                 # This file
+│   └── guides/                # Integration guides and tutorials
+│       ├── integrations/      # Framework-specific guides
+│       ├── introduction.mdx   # Getting started
+│       └── quickstart.mdx     # Quick setup guide
+├── images/                    # Documentation images and assets
+├── logo/                      # Brand assets
+├── snippets/                  # Reusable content snippets
+├── docs.json                  # Mintlify configuration
+└── README.md                  # This file
 ```
 
 ## Development

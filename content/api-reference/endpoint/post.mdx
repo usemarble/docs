@@ -1,24 +1,32 @@
 ---
 title: "Get a Single Post"
-description: "Retrieves a single post by its slug."
+description: "Retrieves a single post by its identifier (slug or id)."
 ---
 
 <RequestExample>
-```bash cURL
+```bash cURL (by slug)
 curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+```
+
+```bash cURL (by id)
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/clt92n38p000108l48zkj41an"
 ```
 
 ```javascript Node.js
 const fetch = require("node-fetch");
 
+// You can pass either a slug or an id as the identifier
+const identifier = "introducing-marblecms"; // or: "clt92n38p000108l48zkj41an"
+
 fetch(
-  "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+  `https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/${identifier}`
 )
   .then((res) => res.json())
   .then((json) => console.log(json))
   .catch((err) => console.error("error:" + err));
 ```
 
+````
 </RequestExample>
 
 <ResponseExample>
@@ -54,11 +62,12 @@ fetch(
     "attribution": null
   }
 }
-```
+````
+
 </ResponseExample>
 
 ### Path Parameters
 
-<ParamField path="slug" type="string" required>
-  The slug of the post to retrieve.
-</ParamField>{" "}
+<ParamField path="identifier" type="string" required>
+  The slug or id of the post to retrieve.
+</ParamField>
