@@ -3,8 +3,6 @@ title: "Get All Posts"
 description: "Retrieves a paginated list of posts in a workspace."
 ---
 
-### Basic usage
-
 <RequestExample>
 ```bash cURL
 curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts"
@@ -18,6 +16,7 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
   .then((json) => console.log(json))
   .catch((err) => console.error("error:" + err));
 ```
+
 </RequestExample>
 
 <ResponseExample>
@@ -66,71 +65,14 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
 ```
 </ResponseExample>
 
-### Advanced: pagination, sorting, and filtering
-
-Use query parameters to paginate, sort, and filter the results. The example below returns the first page of posts in the "announcements" category that are tagged with either "product" or "engineering" and contain the term "modern", sorted by newest first.
-
-<RequestExample>
-  ```bash cURL (with params) curl
-  "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts?limit=10&page=1&order=desc&category=announcements&tags=product,engineering&query=modern"
-  ```
-</RequestExample>
-
-<ResponseExample>
-```json
-{
-  "posts": [
-    {
-      "id": "cltxxxxxxx000108l48zkj41a1",
-      "slug": "modern-content-workflows",
-      "title": "Modern Content Workflows",
-      "description": "How we streamlined publishing with MarbleCMS.",
-      "coverImage": "...",
-      "publishedAt": "2024-06-12T00:00:00.000Z",
-      "authors": [
-        { "id": "clt92f96m000008l4gken6v2t", "name": "John Doe", "image": "..." }
-      ],
-      "category": { "id": "clt92hrnp000208l43kbo28d0", "name": "Announcements", "slug": "announcements" },
-      "tags": [
-        { "id": "clt92k3c1000408l47h5f0b5y", "name": "Product", "slug": "product" },
-        { "id": "clt92k3c1000508l4gd2p3b8h", "name": "Engineering", "slug": "engineering" }
-      ],
-      "attribution": null
-    },
-    {
-      "id": "cltxxxxxxx000108l48zkj41a2",
-      "slug": "engineering-modernization",
-      "title": "Engineering Modernization",
-      "description": "Modern practices for content delivery at scale.",
-      "coverImage": "...",
-      "publishedAt": "2024-06-01T00:00:00.000Z",
-      "authors": [
-        { "id": "clt92f96m000008l4gken6v2t", "name": "John Doe", "image": "" }
-      ],
-      "category": { "id": "clt92hrnp000208l43kbo28d0", "name": "Announcements", "slug": "announcements" },
-      "tags": [
-        { "id": "clt92k3c1000408l47h5f0b5y", "name": "Product", "slug": "product" },
-        { "id": "clt92k3c1000508l4gd2p3b8h", "name": "Engineering", "slug": "engineering" }
-      ],
-      "attribution": null
-    }
-  ],
-  "pagination": {
-    "limit": 10,
-    "currentPage": 1,
-    "previousPage": null,
-    "nextPage": null,
-    "totalPages": 1,
-    "totalItems": 2,
-  }
-}
-```
-</ResponseExample>
 
 ### Query Parameters
 
-<ParamField query="limit" type="integer | \"all\"" default="10">
-  Maximum number of items to return. Use `all` to return all posts in a single response.
+Use query parameters to paginate, sort, and filter the results.
+
+<ParamField query="limit" type='integer | "all"' default="10">
+  Maximum number of items to return. Use `all` to return all posts in a single
+  response.
 </ParamField>
 
 <ParamField query="page" type="integer" default="1">
