@@ -12,6 +12,10 @@ curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-m
 curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/clt92n38p000108l48zkj41an"
 ```
 
+```bash cURL (with markdown format)
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms?format=markdown"
+```
+
 ```javascript Node.js
 const fetch = require("node-fetch");
 
@@ -68,4 +72,10 @@ fetch(
 
 <ParamField path="identifier" type="string" required>
   The slug or id of the post to retrieve.
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="format" type="string">
+  The format of the content field in the response. Set to `markdown` to return the content as markdown instead of HTML.
 </ParamField>
