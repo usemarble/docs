@@ -13,11 +13,7 @@
       "url": "http://sandbox.mintlify.com"
     }
   ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
+
   "paths": {
     "/plants": {
       "get": {
@@ -207,11 +203,6 @@
         }
       }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
+
   }
 }
