@@ -82,7 +82,7 @@ export async function getAuthors() {
     const raw = await fetch(`${url}/${key}/authors`);
     const data = await raw.json();
     return data;
-  } catch (error)
+  } catch (error) {
     console.log(error);
   }
 }
