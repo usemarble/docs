@@ -142,4 +142,87 @@ export default async function PostPage({ params }) {
   We use `dangerouslySetInnerHTML` to render the HTML content of your post. MarbleCMS sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
 </Info>
 </Step>
+
+<Step title="Example Styling (Optional)">
+To improve the appearance of your content, you can use Tailwind CSS Typography to add beautiful typographic defaults. We provide a simple `Prose` component that makes it easy to style your MarbleCMS content.
+
+First, install the Tailwind CSS Typography plugin:
+
+```bash
+npm install -D @tailwindcss/typography
+```
+
+Add it to your Tailwind CSS configuration. If you're using Tailwind CSS v4:
+
+```css app/globals.css
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+```
+
+For Tailwind CSS v3, add it to your `tailwind.config.js`:
+
+```javascript tailwind.config.js
+module.exports = {
+  theme: {
+    // ...
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    // ...
+  ],
+}
+```
+
+Now create a `Prose` component that you can use to style your content. Create `components/prose.tsx`:
+
+```tsx components/prose.tsx
+import { cn } from '@/lib/utils';
+import type { HTMLAttributes } from 'react';
+
+type ProseProps = HTMLAttributes<HTMLElement> & {
+  as?: 'article';
+  html: string;
+};
+
+export function Prose({ children, html, className }: ProseProps) {
+  return (
+    <article
+      className={cn(
+        'prose prose-h1:font-bold prose-h1:text-xl prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl prose-headings:font-serif prose-headings:font-normal mx-auto',
+        className
+      )}
+    >
+      {html ? <div dangerouslySetInnerHTML={{ __html: html }} /> : children}
+    </article>
+  );
+}
+
+```
+
+<Info>
+  **Note:** This component assumes you have a `cn` utility function for combining class names. You can install and set up `clsx` or use a similar utility, or simply replace `cn()` with string concatenation.
+</Info>
+
+Now you can update your post page to use the `Prose` component:
+
+```jsx app/blog/[slug]/page.jsx
+import { getSinglePost } from "@/lib/query";
+import { Prose } from "@/components/prose";
+
+export default async function PostPage({ params }) {
+  const { post } = await getSinglePost(params.slug);
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <Prose html={post.content} />
+    </div>
+  );
+}
+```
+
+This will give your content beautiful, readable typography with proper spacing, font sizes, and styling for headings, links, images, and other elements. You can customize the styles by modifying the classes in the `Prose` component or by extending the typography configuration in your Tailwind config.
+
+For more information about customizing the typography styles, check out [Tailwind CSS Typography](https://github.com/tailwindlabs/tailwindcss-typography)!
+</Step>
 </Steps>
