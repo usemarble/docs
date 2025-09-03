@@ -88,6 +88,21 @@ Marble will send the signature in the `x-marble-signature` header of the request
 ### Request Payload
 
 When a webhook is triggered, Marble sends a POST request to the specified URL with a JSON payload. The payload structure varies depending on the event type. We try to keep the payloads as minimal as possible, only including relevant data.
+
+For `post.published` and `post.updated` events, the payload includes the post title along with the standard fields. Here's an example payload for a `post.published` event:
+
+```json
+{
+  "event": "post.published",
+  "data": {
+    "id": "cmf3d1gsv11469tlkp53bcutv",
+    "slug": "getting-started-with-marble",
+    "title": "Getting Started with Marble CMS",
+    "userId": "cms96emp70001l60415sft0i5"
+  }
+}
+```
+
 Here's an example payload for a `tag.deleted` event:
 
 ```json
