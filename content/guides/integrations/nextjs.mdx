@@ -1,15 +1,15 @@
 ---
 title: "Next.js"
-description: "Integrate MarbleCMS in your Next.js application"
+description: "Integrate Marble in your Next.js application"
 ---
 
-Getting your content to your Next.js site is as simple as making an API request to the MarbleCMS API. This guide will walk you through setting up a blog with MarbleCMS and Next.js.
+Getting your content to your Next.js site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and Next.js.
 
 If you want to get started quickly, you can clone our [Next.js blog template](https://github.com/taqh/nextjs-example).
 
 <Steps>
 <Step title="Set up environment variables">
-First, you'll need to add your MarbleCMS API URL and Workspace Key to your environment variables. Create a `.env.local` file in the root of your Next.js project and add the following:
+First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env.local` file in the root of your Next.js project and add the following:
 
 ```bash .env.local
 MARBLE_API_URL=https://api.marblecms.com/v1
@@ -24,12 +24,12 @@ MARBLE_WORKSPACE_KEY=your_workspace_key_here
 </Warning>
 
 <Tip>
-You can find your Workspace Key in your MarbleCMS dashboard under the settings for your workspace.
+You can find your Workspace Key in your Marble dashboard under the settings for your workspace.
 </Tip>
 </Step>
 
 <Step title="Create API utility functions">
-To make it easier to fetch data from MarbleCMS, you can create a utility file to wrap your API calls. This keeps your data-fetching logic organized and reusable.
+To make it easier to fetch data from Marble, you can create a utility file to wrap your API calls. This keeps your data-fetching logic organized and reusable.
 
 Create a file at `lib/query.js` (or `.ts` if you're using TypeScript).
 
@@ -139,12 +139,12 @@ export default async function PostPage({ params }) {
 <Info>
   **A note on `dangerouslySetInnerHTML`**
   
-  We use `dangerouslySetInnerHTML` to render the HTML content of your post. MarbleCMS sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
+  We use `dangerouslySetInnerHTML` to render the HTML content of your post. Marble sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
 </Info>
 </Step>
 
 <Step title="Example Styling (Optional)">
-To improve the appearance of your content, you can use Tailwind CSS Typography to add beautiful typographic defaults. We provide a simple `Prose` component that makes it easy to style your MarbleCMS content.
+To improve the appearance of your content, you can use Tailwind CSS Typography to add beautiful typographic defaults. We provide a simple `Prose` component that makes it easy to style your Marble content.
 
 First, install the Tailwind CSS Typography plugin:
 

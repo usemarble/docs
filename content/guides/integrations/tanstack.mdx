@@ -1,9 +1,9 @@
 ---
 title: "TanStack Start"
-description: "Integrate MarbleCMS in your TanStack Start application"
+description: "Integrate Marble in your TanStack Start application"
 ---
 
-Getting your content to your TanStack Start site is as simple as making an API request to the MarbleCMS API. This guide will walk you through setting up a blog with MarbleCMS and TanStack Start.
+Getting your content to your TanStack Start site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and TanStack Start.
 
 To create a new TanStack Start project, run:
 
@@ -13,7 +13,7 @@ npx create-start-app@latest
 
 <Steps>
 <Step title="Set up environment variables">
-First, you'll need to add your MarbleCMS API URL and Workspace Key to your environment variables. Create a `.env` file in the root of your TanStack Start project and add the following:
+First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env` file in the root of your TanStack Start project and add the following:
 
 ```bash .env
 MARBLE_API_URL=https://api.marblecms.com/v1
@@ -28,7 +28,7 @@ MARBLE_WORKSPACE_KEY=your_workspace_key_here
 </Warning>
 
 <Tip>
-You can find your Workspace Key in your MarbleCMS dashboard under the settings for your workspace.
+You can find your Workspace Key in your Marble dashboard under the settings for your workspace.
 </Tip>
 </Step>
 
@@ -149,7 +149,6 @@ To display a single post, create a dynamic route in TanStack Start. Create a fil
 ```tsx src/routes/posts/$slug.tsx
 import { createFileRoute } from "@tanstack/react-router";
 import { getSinglePost } from "@/lib/query";
-import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/posts/$slug")({
   component: PostPage,
@@ -176,12 +175,12 @@ function PostPage() {
 <Info>
   **A note on `dangerouslySetInnerHTML`**
   
-  We use `dangerouslySetInnerHTML` to render the HTML content of your post. MarbleCMS sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
+  We use `dangerouslySetInnerHTML` to render the HTML content of your post. Marble sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
 </Info>
 </Step>
 
 <Step title="Example Styling (Optional)">
-To improve the appearance of your content, you can use Tailwind CSS Typography to add beautiful typographic defaults. We provide a simple `Prose` component that makes it easy to style your MarbleCMS content.
+To improve the appearance of your content, you can use Tailwind CSS Typography to add beautiful typographic defaults. We provide a simple `Prose` component that makes it easy to style your Marble content.
 
 First, install the Tailwind CSS Typography plugin:
 
@@ -210,9 +209,9 @@ module.exports = {
 };
 ```
 
-Now create a `Prose` component that you can use to style your content. Create `components/prose.tsx`:
+Now create a `Prose` component that you can use to style your content. Create `components/Prose.tsx`:
 
-```tsx components/prose.tsx
+```tsx components/Prose.tsx
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "react";
 
@@ -246,7 +245,7 @@ Now you can update your post page to use the `Prose` component:
 ```tsx src/routes/posts/$slug.tsx
 import { createFileRoute } from "@tanstack/react-router";
 import { getSinglePost } from "@/lib/query";
-import { Prose } from "@/components/prose";
+import { Prose } from "@/components/Prose";
 
 export const Route = createFileRoute("/posts/$slug")({
   component: PostPage,
