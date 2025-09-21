@@ -33,8 +33,13 @@ Next, define your content collection. This tells Astro how to fetch and validate
 
 This configuration defines a `posts` collection, specifies a schema for your post data using Zod for validation, and includes a loader function that fetches all your posts from the Marble API.
 
+<Note>
+For complete TypeScript type definitions, see our [TypeScript Types reference](/content/api-reference/types). The schema below matches the `Post` type from the API.
+</Note>
+
 ```typescript src/content.config.ts
 import { z, defineCollection } from "astro:content";
+import type { MarblePostList } from "./types/marble"; // Optional: import types for better IDE support
 
 const key = import.meta.env.MARBLE_WORKSPACE_KEY;
 const url = import.meta.env.MARBLE_API_URL;
@@ -47,6 +52,7 @@ const postSchema = z.object({
   description: z.string(),
   coverImage: z.string().url(),
   publishedAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
   authors: z.array(
     z.object({
       id: z.string(),

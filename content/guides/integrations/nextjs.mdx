@@ -31,26 +31,22 @@ You can find your Workspace Key in your Marble dashboard under the settings for 
 <Step title="Create API utility functions">
 To make it easier to fetch data from Marble, you can create a utility file to wrap your API calls. This keeps your data-fetching logic organized and reusable.
 
-Create a file at `lib/query.js` (or `.ts` if you're using TypeScript).
+Create a file at `lib/query.ts` (or `.js` if you're using JavaScript).
 
-```javascript lib/query.js
+<Note>
+For complete TypeScript type definitions, see our [TypeScript Types reference](/content/api-reference/types). The server functions below use these types for full type safety.
+</Note>
+
+```typescript lib/query.ts
+import type { MarbleAuthorList, MarbleCategoryList, MarblePost, MarblePostList, MarbleTagList } from '@/types/marble';
+
 const url = process.env.MARBLE_API_URL;
 const key = process.env.MARBLE_WORKSPACE_KEY;
 
 export async function getPosts() {
   try {
     const raw = await fetch(`${url}/${key}/posts`);
-    const data = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getSinglePost(slug) {
-  try {
-    const raw = await fetch(`${url}/${key}/posts/${slug}`);
-    const data = await raw.json();
+    const data: MarblePostList = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
@@ -60,7 +56,17 @@ export async function getSinglePost(slug) {
 export async function getTags() {
   try {
     const raw = await fetch(`${url}/${key}/tags`);
-    const data = await raw.json();
+    const data: MarbleTagList = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getSinglePost(slug: string) {
+  try {
+    const raw = await fetch(`${url}/${key}/posts/${slug}`);
+    const data: MarblePost = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
@@ -70,7 +76,7 @@ export async function getTags() {
 export async function getCategories() {
   try {
     const raw = await fetch(`${url}/${key}/categories`);
-    const data = await raw.json();
+    const data: MarbleCategoryList = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
@@ -80,12 +86,13 @@ export async function getCategories() {
 export async function getAuthors() {
   try {
     const raw = await fetch(`${url}/${key}/authors`);
-    const data = await raw.json();
+    const data: MarbleAuthorList = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
   }
 }
+
 ```
 
 </Step>

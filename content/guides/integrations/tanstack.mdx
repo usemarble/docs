@@ -5,6 +5,8 @@ description: "Integrate Marble in your TanStack Start application"
 
 Getting your content to your TanStack Start site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and TanStack Start.
 
+If you want to get started quickly, you can clone our [TanStack Start blog template](https://github.com/usemarble/examples/tree/main/tanstack-start).
+
 To create a new TanStack Start project, run:
 
 ```bash
@@ -41,7 +43,12 @@ First, install the required dependencies:
 npm install zod
 ```
 
+<Note>
+For complete TypeScript type definitions, see our [TypeScript Types reference](/content/api-reference/types). The server functions below use these types for full type safety.
+</Note>
+
 ```typescript lib/query.ts
+import type { MarbleAuthorList, MarbleCategoryList, MarblePost, MarblePostList, MarbleTagList } from '@/types/marble';
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -51,39 +58,39 @@ const key = process.env.MARBLE_WORKSPACE_KEY;
 export const getPosts = createServerFn().handler(async () => {
   try {
     const raw = await fetch(`${url}/${key}/posts`);
-    const data = await raw.json();
+    const data: MarblePostList = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
   }
 });
 
-export const getSinglePost = createServerFn()
-  .validator(z.string())
-  .handler(async ({ data: slug }) => {
+export const getTags = createServerFn().handler(async () => {
     try {
-      const raw = await fetch(`${url}/${key}/posts/${slug}`);
-      const data = await raw.json();
+      const raw = await fetch(`${url}/${key}/tags`);
+      const data: MarbleTagList = await raw.json();
       return data;
     } catch (error) {
       console.log(error);
     }
   });
 
-export const getTags = createServerFn().handler(async () => {
-  try {
-    const raw = await fetch(`${url}/${key}/tags`);
-    const data = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-});
+export const getSinglePost = createServerFn()
+  .validator(z.string())
+  .handler(async ({ data: slug }) => {
+    try {
+      const raw = await fetch(`${url}/${key}/posts/${slug}`);
+      const data: MarblePost = await raw.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
 export const getCategories = createServerFn().handler(async () => {
   try {
     const raw = await fetch(`${url}/${key}/categories`);
-    const data = await raw.json();
+    const data: MarbleCategoryList = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
@@ -93,7 +100,7 @@ export const getCategories = createServerFn().handler(async () => {
 export const getAuthors = createServerFn().handler(async () => {
   try {
     const raw = await fetch(`${url}/${key}/authors`);
-    const data = await raw.json();
+    const data: MarbleAuthorList = await raw.json();
     return data;
   } catch (error) {
     console.log(error);
@@ -152,9 +159,9 @@ import { getSinglePost } from "@/lib/query";
 
 export const Route = createFileRoute("/posts/$slug")({
   component: PostPage,
-  loader: async ({ params }) => {
-    const post = await getSinglePost(params.slug);
-    return post;
+  loader: async ({ params }: { params: { slug: string } }) => {
+    const data = await getSinglePost({ data: params.slug });
+    return data;
   },
 });
 
@@ -249,9 +256,9 @@ import { Prose } from "@/components/Prose";
 
 export const Route = createFileRoute("/posts/$slug")({
   component: PostPage,
-  loader: async ({ params }) => {
-    const post = await getSinglePost(params.slug);
-    return post;
+  loader: async ({ params }: { params: { slug: string } }) => {
+    const data = await getSinglePost({ data: params.slug });
+    return data;
   },
 });
 

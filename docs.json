@@ -53,7 +53,7 @@
           },
           {
             "group": "Miscellaneous",
-            "pages": ["content/api-reference/pagination"]
+            "pages": ["content/api-reference/pagination", "content/api-reference/types"]
           }
         ]
       }
