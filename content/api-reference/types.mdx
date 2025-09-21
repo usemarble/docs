@@ -1,0 +1,159 @@
+---
+title: "TypeScript Types"
+description: "TypeScript type definitions for Marble API responses."
+---
+
+This page provides TypeScript type definitions for all Marble API responses. These types can be used to ensure type safety when integrating Marble with TypeScript projects.
+
+<Note>
+All types are based on the actual API responses and are kept up-to-date with the latest API version.
+</Note>
+
+
+## Type Definitions
+
+```typescript
+export type Post = {
+    id: string;
+    slug: string;
+    title: string;
+    content: string;
+    description: string;
+    coverImage: string;
+    publishedAt: Date;
+    updatedAt: Date;
+    authors: {
+      id: string;
+      name: string;
+      image: string;
+    }[];
+    category: {
+      id: string;
+      slug: string;
+      name: string;
+    };
+    tags: {
+      id: string;
+      slug: string;
+      name: string;
+    }[];
+    attribution: {
+      author: string;
+      url: string;
+    } | null;
+  };
+  
+  export type Pagination = {
+    limit: number;
+    currentPage: number;
+    nextPage: number | null;
+    previousPage: number | null;
+    totalItems: number;
+    totalPages: number;
+  };
+  
+  export type MarblePostList = {
+    posts: Post[];
+    pagination: Pagination;
+  };
+  
+  export type MarblePost = {
+    post: Post;
+  };
+  
+  export type Tag = {
+    id: string;
+    name: string;
+    slug: string;
+  };
+  
+  export type MarbleTag = {
+    tag: Tag;
+  };
+  
+  export type MarbleTagList = {
+    tags: Tag[];
+    pagination: Pagination;
+  };
+  
+  export type Category = {
+    id: string;
+    name: string;
+    slug: string;
+  };
+  
+  export type MarbleCategory = {
+    category: Category;
+  };
+  
+  export type MarbleCategoryList = {
+    categories: Category[];
+    pagination: Pagination;
+  };
+  
+  export type Author = {
+    id: string;
+    name: string;
+    image: string;
+  };
+  
+  export type MarbleAuthor = {
+    author: Author;
+  };
+  
+  export type MarbleAuthorList = {
+    authors: Author[];
+    pagination: Pagination;
+  };
+```
+
+<Tip>
+Copy these type definitions into a `types/marble.ts` file in your project. In the future, we will also provide a package that you can install to keep your types centralized across multiple projects.
+</Tip>
+
+### Zod Schemas
+
+For runtime validation, you can also create Zod schemas for your data:
+
+```typescript
+import { z } from 'zod';
+
+const PostSchema = z.object({
+  id: z.string(),
+  slug: z.string(),
+  title: z.string(),
+  content: z.string(),
+  description: z.string(),
+  coverImage: z.string().url(),
+  publishedAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  authors: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    image: z.string().url(),
+  })),
+  category: z.object({
+    id: z.string(),
+    slug: z.string(),
+    name: z.string(),
+  }),
+  tags: z.array(z.object({
+    id: z.string(),
+    slug: z.string(),
+    name: z.string(),
+  })),
+  attribution: z.object({
+    author: z.string(),
+    url: z.string().url(),
+  }).nullable(),
+});
+
+const PaginationSchema = z.object({
+  limit: z.number(),
+  currentPage: z.number(),
+  nextPage: z.number().nullable(),
+  previousPage: z.number().nullable(),
+  totalItems: z.number(),
+  totalPages: z.number(),
+});
+```

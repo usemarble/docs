@@ -1,0 +1,284 @@
+---
+title: "TanStack Start"
+description: "Integrate Marble in your TanStack Start application"
+---
+
+Getting your content to your TanStack Start site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and TanStack Start.
+
+If you want to get started quickly, you can clone our [TanStack Start blog template](https://github.com/usemarble/examples/tree/main/tanstack-start).
+
+To create a new TanStack Start project, run:
+
+```bash
+npx create-start-app@latest
+```
+
+<Steps>
+<Step title="Set up environment variables">
+First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env` file in the root of your TanStack Start project and add the following:
+
+```bash .env
+MARBLE_API_URL=https://api.marblecms.com/v1
+MARBLE_WORKSPACE_KEY=your_workspace_key_here
+```
+
+<Warning>
+  **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
+  Your environment variables should only be accessed on the server during the
+  build process. For client-side updates, use
+  [webhooks](/content/guides/webhooks) to trigger rebuilds.
+</Warning>
+
+<Tip>
+You can find your Workspace Key in your Marble dashboard under the settings for your workspace.
+</Tip>
+</Step>
+
+<Step title="Create server functions">
+TanStack Start uses server functions for data fetching. These functions run on the server and can be called from your components. Create a file at `lib/query.ts`:
+
+First, install the required dependencies:
+
+```bash
+npm install zod
+```
+
+<Note>
+For complete TypeScript type definitions, see our [TypeScript Types reference](/content/api-reference/types). The server functions below use these types for full type safety.
+</Note>
+
+```typescript lib/query.ts
+import type { MarbleAuthorList, MarbleCategoryList, MarblePost, MarblePostList, MarbleTagList } from '@/types/marble';
+import { createServerFn } from "@tanstack/react-start";
+import { z } from "zod";
+
+const url = process.env.MARBLE_API_URL;
+const key = process.env.MARBLE_WORKSPACE_KEY;
+
+export const getPosts = createServerFn().handler(async () => {
+  try {
+    const raw = await fetch(`${url}/${key}/posts`);
+    const data: MarblePostList = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const getTags = createServerFn().handler(async () => {
+    try {
+      const raw = await fetch(`${url}/${key}/tags`);
+      const data: MarbleTagList = await raw.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+export const getSinglePost = createServerFn()
+  .validator(z.string())
+  .handler(async ({ data: slug }) => {
+    try {
+      const raw = await fetch(`${url}/${key}/posts/${slug}`);
+      const data: MarblePost = await raw.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+export const getCategories = createServerFn().handler(async () => {
+  try {
+    const raw = await fetch(`${url}/${key}/categories`);
+    const data: MarbleCategoryList = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const getAuthors = createServerFn().handler(async () => {
+  try {
+    const raw = await fetch(`${url}/${key}/authors`);
+    const data: MarbleAuthorList = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+```
+
+</Step>
+
+<Step title="Display a list of posts">
+Now you can use the server functions in a TanStack Start route to fetch and display a list of your posts. Create a file at `src/routes/posts/index.tsx`:
+
+```tsx src/routes/posts/index.tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { getPosts } from "@/lib/query";
+import { Link } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/posts/")({
+  component: PostsPage,
+  loader: async () => {
+    const posts = await getPosts();
+    return posts;
+  },
+});
+
+function PostsPage() {
+  const { posts } = Route.useLoaderData();
+
+  if (!posts) return <div>No posts found</div>;
+
+  return (
+    <section>
+      <h1>Posts</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <Link to="/posts/$slug" params={{ slug: post.slug }}>
+              {post.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+```
+
+</Step>
+
+<Step title="Display a single post">
+To display a single post, create a dynamic route in TanStack Start. Create a file at `src/routes/posts/$slug.tsx`:
+
+```tsx src/routes/posts/$slug.tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { getSinglePost } from "@/lib/query";
+
+export const Route = createFileRoute("/posts/$slug")({
+  component: PostPage,
+  loader: async ({ params }: { params: { slug: string } }) => {
+    const data = await getSinglePost({ data: params.slug });
+    return data;
+  },
+});
+
+function PostPage() {
+  const { post } = Route.useLoaderData();
+
+  if (!post) return <div>Post not found</div>;
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <article dangerouslySetInnerHTML={{ __html: post.content }} />
+    </div>
+  );
+}
+```
+
+<Info>
+  **A note on `dangerouslySetInnerHTML`**
+  
+  We use `dangerouslySetInnerHTML` to render the HTML content of your post. Marble sanitizes all HTML content before it's sent to you, so you can be confident that it's safe to render in your application.
+</Info>
+</Step>
+
+<Step title="Example Styling (Optional)">
+To improve the appearance of your content, you can use Tailwind CSS Typography to add beautiful typographic defaults. We provide a simple `Prose` component that makes it easy to style your Marble content.
+
+First, install the Tailwind CSS Typography plugin:
+
+```bash
+npm install -D @tailwindcss/typography
+```
+
+Add it to your Tailwind CSS configuration. If you're using Tailwind CSS v4:
+
+```css src/styles.css
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+```
+
+For Tailwind CSS v3, add it to your `tailwind.config.js`:
+
+```javascript tailwind.config.js
+module.exports = {
+  theme: {
+    // ...
+  },
+  plugins: [
+    require("@tailwindcss/typography"),
+    // ...
+  ],
+};
+```
+
+Now create a `Prose` component that you can use to style your content. Create `components/Prose.tsx`:
+
+```tsx components/Prose.tsx
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "react";
+
+type ProseProps = HTMLAttributes<HTMLElement> & {
+  as?: "article";
+  html: string;
+};
+
+export function Prose({ children, html, className }: ProseProps) {
+  return (
+    <article
+      className={cn(
+        "prose prose-h1:font-bold prose-h1:text-xl prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl prose-headings:font-serif prose-headings:font-normal mx-auto",
+        className
+      )}
+    >
+      {html ? <div dangerouslySetInnerHTML={{ __html: html }} /> : children}
+    </article>
+  );
+}
+```
+
+<Info>
+  **Note:** This component assumes you have a `cn` utility function for
+  combining class names. You can install and set up `clsx` or use a similar
+  utility, or simply replace `cn()` with string concatenation.
+</Info>
+
+Now you can update your post page to use the `Prose` component:
+
+```tsx src/routes/posts/$slug.tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { getSinglePost } from "@/lib/query";
+import { Prose } from "@/components/Prose";
+
+export const Route = createFileRoute("/posts/$slug")({
+  component: PostPage,
+  loader: async ({ params }: { params: { slug: string } }) => {
+    const data = await getSinglePost({ data: params.slug });
+    return data;
+  },
+});
+
+function PostPage() {
+  const { post } = Route.useLoaderData();
+
+  if (!post) return <div>Post not found</div>;
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <Prose html={post.content} />
+    </div>
+  );
+}
+```
+
+This will give your content beautiful, readable typography with proper spacing, font sizes, and styling for headings, links, images, and other elements. You can customize the styles by modifying the classes in the `Prose` component or by extending the typography configuration in your Tailwind config.
+
+For more information about customizing the typography styles, check out [TailWind CSS Typography](https://github.com/tailwindlabs/tailwindcss-typography)!
+
+</Step>
+</Steps>

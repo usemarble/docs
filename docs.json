@@ -15,11 +15,18 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["content/guides/introduction", "content/guides/quickstart"]
+            "pages": [
+              "content/guides/introduction",
+              "content/guides/quickstart"
+            ]
           },
           {
             "group": "Integrations",
-            "pages": ["content/guides/integrations/astro", "content/guides/integrations/nextjs"]
+            "pages": [
+              "content/guides/integrations/astro",
+              "content/guides/integrations/nextjs",
+              "content/guides/integrations/tanstack"
+            ]
           },
           {
             "group": "Features",
@@ -46,7 +53,7 @@
           },
           {
             "group": "Miscellaneous",
-            "pages": ["content/api-reference/pagination"]
+            "pages": ["content/api-reference/pagination", "content/api-reference/types"]
           }
         ]
       }
