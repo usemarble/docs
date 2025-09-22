@@ -19,8 +19,7 @@ MARBLE_WORKSPACE_KEY="your_workspace_key_here"
 <Warning>
   **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
   Your environment variables are loaded into the server context during the build
-  process and should not be shared with the client. For client-side updates, use
-  [webhooks](/content/guides/webhooks) to trigger rebuilds.
+  process and should not be shared with the client. 
 </Warning>
 
 <Tip>
@@ -31,15 +30,14 @@ You can find your Workspace Key in your Marble dashboard under your workspace se
 <Step title="Configure your content collection">
 Next, define your content collection. This tells Astro how to fetch and validate your data from Marble. Create a file named `src/content/config.ts` and add the following code.
 
-This configuration defines a `posts` collection, specifies a schema for your post data using Zod for validation, and includes a loader function that fetches all your posts from the Marble API.
+This configuration defines a `posts` collection, and includes a loader function that fetches your posts from the Marble API.
 
 <Note>
-For complete TypeScript type definitions, see our [TypeScript Types reference](/content/api-reference/types). The schema below matches the `Post` type from the API.
+For complete TypeScript type definitions, see our [Types reference](/content/api-reference/types). The schema below matches the `Post` type from the API.
 </Note>
 
 ```typescript src/content.config.ts
 import { z, defineCollection } from "astro:content";
-import type { MarblePostList } from "./types/marble"; // Optional: import types for better IDE support
 
 const key = import.meta.env.MARBLE_WORKSPACE_KEY;
 const url = import.meta.env.MARBLE_API_URL;
@@ -83,12 +81,15 @@ const postSchema = z.object({
 type Post = z.infer<typeof postSchema>;
 
 const postsCollection = defineCollection({
-  type: "data",
   schema: postSchema,
   loader: async () => {
     const response = await fetch(`${url}/${key}/posts`);
     const { posts }: { posts: Post[] } = await response.json();
-    return Object.fromEntries(posts.map((post) => [post.slug, post]));
+    // Must return an array of entries with an id property
+    // or an object with IDs as keys and entries as values
+    return posts.map((post) => ({
+      ...post,
+    }));
   },
 });
 
