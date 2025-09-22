@@ -38,6 +38,7 @@ For complete TypeScript type definitions, see our [Types reference](/content/api
 
 ```typescript src/content.config.ts
 import { z, defineCollection } from "astro:content";
+import type { MarblePostList } from "./types/marble";
 
 const key = import.meta.env.MARBLE_WORKSPACE_KEY;
 const url = import.meta.env.MARBLE_API_URL;
@@ -84,9 +85,7 @@ const postsCollection = defineCollection({
   schema: postSchema,
   loader: async () => {
     const response = await fetch(`${url}/${key}/posts`);
-    const { posts }: { posts: Post[] } = await response.json();
-    // Must return an array of entries with an id property
-    // or an object with IDs as keys and entries as values
+    const { posts }: MarblePostList = await response.json();
     return posts.map((post) => ({
       ...post,
     }));
