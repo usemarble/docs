@@ -67,7 +67,7 @@
         },
         {
           "anchor": "Community",
-          "href": "https://discord.gg/jwEjcb7HUe",
+          "href": "https://discord.marblecms.com/",
           "icon": "discord"
         }
       ]
@@ -79,7 +79,7 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/retaqib",
+      "x": "https://x.com/usemarblecms",
       "github": "https://github.com/usemarble"
     }
   }
