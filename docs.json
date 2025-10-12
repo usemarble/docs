@@ -39,21 +39,21 @@
         "groups": [
           {
             "group": "Introduction",
-            "pages": ["content/api-reference/introduction"]
+            "pages": ["content/api/introduction"]
           },
           {
             "group": "Endpoints",
             "pages": [
-              "content/api-reference/endpoint/posts",
-              "content/api-reference/endpoint/post",
-              "content/api-reference/endpoint/tags",
-              "content/api-reference/endpoint/categories",
-              "content/api-reference/endpoint/authors"
+              "content/api/endpoint/posts",
+              "content/api/endpoint/post",
+              "content/api/endpoint/tags",
+              "content/api/endpoint/categories",
+              "content/api/endpoint/authors"
             ]
           },
           {
             "group": "Miscellaneous",
-            "pages": ["content/api-reference/pagination", "content/api-reference/types"]
+            "pages": ["content/api/pagination", "content/api/types"]
           }
         ]
       }
