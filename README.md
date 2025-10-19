@@ -1,6 +1,6 @@
 # Marble Documentation
 
-Documentation for the Marblecms API built with [Mintlify](https://mintlify.com).
+Documentation for Marble and its API built with [Mintlify](https://mintlify.com).
 
 ## Project Structure
 

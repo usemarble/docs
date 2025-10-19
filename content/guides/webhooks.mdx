@@ -42,46 +42,97 @@ By listening for specific events, you can build powerful, event-driven automatio
 
 To ensure that incoming webhook requests are from Marble and haven't been tampered with, you can verify the request using the webhook secret.
 
-Here's an example of how to verify a webhook request in Node.js using the `crypto` module:
+Here's an example of how to verify a webhook request in Next.js using the `crypto` module:
 
-```javascript
-import { timingSafeEqual, createHmac } from "node:crypto";
+```typescript
+// lib/marble/webhook.ts
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { revalidatePath, revalidateTag } from "next/cache";
+import type { PostEventData } from "@/types/blog";
 
-function verifySignature(expected, computed) {
-  const expectedBuffer = Buffer.from(expected, "hex");
-  const computedBuffer = Buffer.from(computed, "hex");
+export async function handleWebhookEvent(payload: PostEventData) {
+  const event = payload.event;
+  const data = payload.data;
 
-  if (expectedBuffer.length !== computedBuffer.length) {
-    return false;
+  // Handle any post.* events (published, updated, deleted, etc.)
+  if (event.startsWith("post")) {
+    // Revalidate the blog index and the single post page
+    revalidatePath("/blog");
+    revalidatePath(`/blog/${data.slug}`);
+
+    // If your data fetches use tags, revalidate that tag as well:
+    // e.g. fetch(..., { next: { tags: ["posts"] } })
+    revalidateTag("posts");
+
+    return {
+      revalidated: true,
+      now: Date.now(),
+      message: "Post event handled",
+    };
   }
 
-  return timingSafeEqual(expectedBuffer, computedBuffer);
+  return {
+    revalidated: false,
+    now: Date.now(),
+    message: "Event ignored",
+  };
 }
 
-// Compute the expected signature
-const expectedSignature = signature.replace(/^sha256=/, "");
-const computedSignature = createHmac(
-  "sha256",
-  process.env.MARBLE_WEBHOOK_SECRET
-)
-  .update(bodyText)
-  .digest("hex");
+export function verifySignature(secret: string, signatureHeader: string, bodyText: string) {
+  // Strip possible "sha256=" prefix
+  const expectedHex = signatureHeader.replace(/^sha256=/, "");
 
-// Verify the signature
-if (!verifySignature(expectedSignature, computedSignature)) {
-  return new Response(
-    JSON.stringify({
-      error: "Invalid signature",
-    }),
-    {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const computedHex = createHmac("sha256", secret).update(bodyText).digest("hex");
+
+  // Convert to buffers for constant-time compare
+  const expected = Buffer.from(expectedHex, "hex");
+  const computed = Buffer.from(computedHex, "hex");
+
+  // lengths must match for timingSafeEqual
+  if (expected.length !== computed.length) return false;
+
+  return timingSafeEqual(expected, computed);
 }
 ```
+
+```typescript
+// app/api/revalidate/route.ts
+import { NextResponse } from "next/server";
+import type { PostEventData } from "@/types/blog";
+import { verifySignature, handleWebhookEvent } from "@/lib/marble/webhook";
+
+export async function POST(request: Request) {
+  const signature = request.headers.get("x-marble-signature");
+  const secret = process.env.MARBLE_WEBHOOK_SECRET;
+
+  if (!secret || !signature) {
+    return NextResponse.json({ error: "Secret or signature missing" }, { status: 400 });
+  }
+
+  const bodyText = await request.text();
+
+  if (!verifySignature(secret, signature, bodyText)) {
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  }
+
+  const payload = JSON.parse(bodyText) as PostEventData;
+  if (!payload.event || !payload.data) {
+    return Response.json(
+      { error: "Invalid payload structure" },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const result = await handleWebhookEvent(payload);
+    return NextResponse.json(result);
+  } catch (err) {
+    return NextResponse.json({ error: "Failed to process webhook" }, { status: 500 });
+  }
+}
+```
+
+<Note>If you want a better guide on how to invalidate cache in your framework of choice, you can check out our blog post on [Using Marble's Webhooks with the Next.js App Router](https://marblecms.com/blog/nextjs-webhooks-with-marble).</Note>
 
 Marble will send the signature in the `x-marble-signature` header of the request. You can use this signature to verify the authenticity of the request. Make sure to add the `process.env.MARBLE_WEBHOOK_SECRET` environment variable.
 

@@ -8,6 +8,20 @@
     "dark": "#5b4ffc"
   },
   "favicon": "/favicon.svg",
+  "contextual": {
+    "options": [
+      "copy",
+      "chatgpt",
+      "claude",
+      {
+        "title": "Open in T3 Chat",
+        "description": "Ask questions about this page",
+        "icon": "https://t3.chat/favicon.ico",
+        "href": "https://t3.chat/"
+      },
+      "mcp"
+    ]
+  },
   "navigation": {
     "tabs": [
       {
