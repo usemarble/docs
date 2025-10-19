@@ -159,19 +159,20 @@ const PostSchema = z.object({
     id: z.string(),
     slug: z.string(),
     name: z.string(),
-    description: z.string().z.optional(),
+    description: z.string().nullable(),
   }),
   tags: z.array(z.object({
     id: z.string(),
     slug: z.string(),
     name: z.string(),
-    description: z.string().z.optional(),
+    description: z.string().nullable(),
   })),
   attribution: z.object({
     author: z.string(),
     url: z.string().url(),
   }).nullable(),
 });
+
 const PaginationSchema = z.object({
   limit: z.number(),
   currentPage: z.number(),

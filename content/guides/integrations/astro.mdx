@@ -33,8 +33,7 @@ Next, define your content collection. This tells Astro how to fetch and validate
 This configuration defines a `posts` collection, and includes a loader function that fetches your posts from the Marble API.
 
 <Note>
-  For complete TypeScript type definitions, see our [Types
-  reference](/content/api/types). The schema below matches the `Post` type from
+  For complete TypeScript type definitions, see our [Types reference](/content/api/types). The schema below matches the `Post` type from
   the API.
 </Note>
 
@@ -45,7 +44,7 @@ import type { MarblePostList } from "./types/marble";
 const key = import.meta.env.MARBLE_WORKSPACE_KEY;
 const url = import.meta.env.MARBLE_API_URL;
 
-const postSchema = z.object({
+const PostSchema = z.object({
   id: z.string(),
   slug: z.string(),
   title: z.string(),
@@ -54,37 +53,37 @@ const postSchema = z.object({
   coverImage: z.string().url(),
   publishedAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-  authors: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      image: z.string().url(),
-    })
-  ),
+  authors: z.array(z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  image: z.string().nullable(),
+  bio: z.string().nullable(),
+  role: z.string().nullable(),
+  socials: z.array(SocialSchema),
+  })),
   category: z.object({
     id: z.string(),
-    name: z.string(),
     slug: z.string(),
+    name: z.string(),
+    description: z.string().nullable(),
   }),
-  tags: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      slug: z.string(),
-    })
-  ),
-  attribution: z
-    .object({
-      author: z.string(),
-      url: z.string().url(),
-    })
-    .nullable(),
+  tags: z.array(z.object({
+    id: z.string(),
+    slug: z.string(),
+    name: z.string(),
+    description: z.string().nullable(),
+  })),
+  attribution: z.object({
+    author: z.string(),
+    url: z.string().url(),
+  }).nullable(),
 });
 
-type Post = z.infer<typeof postSchema>;
+type Post = z.infer<typeof PostSchema>;
 
 const postsCollection = defineCollection({
-  schema: postSchema,
+  schema: PostSchema,
   loader: async () => {
     const response = await fetch(`${url}/${key}/posts`);
     const { posts }: MarblePostList = await response.json();
