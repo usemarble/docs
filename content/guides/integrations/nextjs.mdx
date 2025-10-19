@@ -19,8 +19,8 @@ MARBLE_WORKSPACE_KEY=your_workspace_key_here
 <Warning>
   **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
   Your environment variables should only be accessed on the server during the
-  build process. For client-side updates, use [webhooks](/content/guides/webhooks) to
-  trigger rebuilds.
+  build process. For client-side updates, use
+  [webhooks](/content/guides/webhooks) to trigger rebuilds.
 </Warning>
 
 <Tip>
@@ -34,11 +34,19 @@ To make it easier to fetch data from Marble, you can create a utility file to wr
 Create a file at `lib/query.ts` (or `.js` if you're using JavaScript).
 
 <Note>
-For complete TypeScript type definitions, see our [TypeScript Types reference](/content/api-reference/types). The server functions below use these types for full type safety.
+  For complete TypeScript type definitions, see our [TypeScript Types
+  reference](/content/api/types). The server functions below use these types for
+  full type safety.
 </Note>
 
 ```typescript lib/query.ts
-import type { MarbleAuthorList, MarbleCategoryList, MarblePost, MarblePostList, MarbleTagList } from '@/types/marble';
+import type {
+  MarbleAuthorList,
+  MarbleCategoryList,
+  MarblePost,
+  MarblePostList,
+  MarbleTagList,
+} from "@/types/marble";
 
 const url = process.env.MARBLE_API_URL;
 const key = process.env.MARBLE_WORKSPACE_KEY;
@@ -92,7 +100,6 @@ export async function getAuthors() {
     console.log(error);
   }
 }
-
 ```
 
 </Step>
@@ -174,20 +181,20 @@ module.exports = {
     // ...
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/typography"),
     // ...
   ],
-}
+};
 ```
 
 Now create a `Prose` component that you can use to style your content. Create `components/prose.tsx`:
 
 ```tsx components/prose.tsx
-import { cn } from '@/lib/utils';
-import type { HTMLAttributes } from 'react';
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "react";
 
 type ProseProps = HTMLAttributes<HTMLElement> & {
-  as?: 'article';
+  as?: "article";
   html: string;
 };
 
@@ -195,7 +202,7 @@ export function Prose({ children, html, className }: ProseProps) {
   return (
     <article
       className={cn(
-        'prose prose-h1:font-bold prose-h1:text-xl prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl prose-headings:font-serif prose-headings:font-normal mx-auto',
+        "prose prose-h1:font-bold prose-h1:text-xl prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl prose-headings:font-serif prose-headings:font-normal mx-auto",
         className
       )}
     >
@@ -203,11 +210,12 @@ export function Prose({ children, html, className }: ProseProps) {
     </article>
   );
 }
-
 ```
 
 <Info>
-  **Note:** This component assumes you have a `cn` utility function for combining class names. You can install and set up `clsx` or use a similar utility, or simply replace `cn()` with string concatenation.
+  **Note:** This component assumes you have a `cn` utility function for
+  combining class names. You can install and set up `clsx` or use a similar
+  utility, or simply replace `cn()` with string concatenation.
 </Info>
 
 Now you can update your post page to use the `Prose` component:
@@ -231,5 +239,6 @@ export default async function PostPage({ params }) {
 This will give your content beautiful, readable typography with proper spacing, font sizes, and styling for headings, links, images, and other elements. You can customize the styles by modifying the classes in the `Prose` component or by extending the typography configuration in your Tailwind config.
 
 For more information about customizing the typography styles, check out [Tailwind CSS Typography](https://github.com/tailwindlabs/tailwindcss-typography)!
+
 </Step>
 </Steps>

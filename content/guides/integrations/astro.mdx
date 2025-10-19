@@ -19,7 +19,7 @@ MARBLE_WORKSPACE_KEY="your_workspace_key_here"
 <Warning>
   **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
   Your environment variables are loaded into the server context during the build
-  process and should not be shared with the client. 
+  process and should not be shared with the client.
 </Warning>
 
 <Tip>
@@ -33,7 +33,9 @@ Next, define your content collection. This tells Astro how to fetch and validate
 This configuration defines a `posts` collection, and includes a loader function that fetches your posts from the Marble API.
 
 <Note>
-For complete TypeScript type definitions, see our [Types reference](/content/api-reference/types). The schema below matches the `Post` type from the API.
+  For complete TypeScript type definitions, see our [Types
+  reference](/content/api/types). The schema below matches the `Post` type from
+  the API.
 </Note>
 
 ```typescript src/content.config.ts
