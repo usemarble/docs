@@ -49,6 +49,7 @@ const PostSchema = z.object({
   slug: z.string(),
   title: z.string(),
   content: z.string(),
+  featured: z.boolean(),
   description: z.string(),
   coverImage: z.string().url(),
   publishedAt: z.coerce.date(),
