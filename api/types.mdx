@@ -44,12 +44,12 @@ export type Pagination = {
   totalPages: number;
 };
 
-export type MarblePostList = {
+export type MarblePostListResponse = {
   posts: Post[];
   pagination: Pagination;
 };
 
-export type MarblePost = {
+export type MarblePostResponse = {
   post: Post;
 };
 
@@ -62,11 +62,11 @@ export type Tag = {
     posts: number;
   };
 };
-export type MarbleTag = {
+export type MarbleTagResponse = {
   tag: Tag;
 };
 
-export type MarbleTagList = {
+export type MarbleTagListResponse = {
   tags: Tag[];
   pagination: Pagination;
 };
@@ -81,11 +81,11 @@ export type Category = {
   };
 };
 
-export type MarbleCategory = {
+export type MarbleCategoryResponse = {
   category: Category;
 };
 
-export type MarbleCategoryList = {
+export type MarbleCategoryListResponse = {
   categories: Category[];
   pagination: Pagination;
 };
@@ -116,11 +116,11 @@ export type SocialPlatform =
 | "discord"
 | "bluesky";
 
-export type MarbleAuthor = {
+export type MarbleAuthorResponse = {
   author: Author;
 };
 
-export type MarbleAuthorList = {
+export type MarbleAuthorListResponse = {
   authors: Author[];
   pagination: Pagination;
 };
@@ -148,13 +148,13 @@ const PostSchema = z.object({
   publishedAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   authors: z.array(z.object({
-  id: z.string(),
-  name: z.string(),
-  slug: z.string(),
-  image: z.string().nullable(),
-  bio: z.string().nullable(),
-  role: z.string().nullable(),
-  socials: z.array(SocialSchema),
+    id: z.string(),
+    name: z.string(),
+    slug: z.string(),
+    image: z.string().nullable(),
+    bio: z.string().nullable(),
+    role: z.string().nullable(),
+    socials: z.array(SocialSchema),
   })),
   category: z.object({
     id: z.string(),
@@ -182,10 +182,12 @@ const PaginationSchema = z.object({
   totalItems: z.number(),
   totalPages: z.number(),
 });
+
 export const SocialSchema = z.object({
   url: z.string(),
   platform: SocialPlatformSchema,
 });
+
 export const SocialPlatformSchema = z.enum([
   "x",
   "github", 
