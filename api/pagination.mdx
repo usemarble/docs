@@ -1,9 +1,9 @@
 ---
 title: "Pagination"
-description: "Learn how to use pagination in the MarbleCMS API."
+description: "Learn how to use pagination in the Marble API."
 ---
 
-MarbleCMS API uses offset-based pagination for endpoints that return multiple items. Pagination metadata is included in every response to help you navigate through large datasets efficiently.
+Marble API uses offset-based pagination for endpoints that return multiple items. Pagination metadata is included in every response to help you navigate through large datasets efficiently.
 
 ## How Pagination Works
 
@@ -171,19 +171,19 @@ curl -X GET 'https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts?page=2&limit=5
 The following endpoints support pagination:
 
 <CardGroup cols={2}>
-<Card title="Posts" icon="file-text" href="/content/api/endpoint/posts">
+<Card title="Posts" icon="file-text" href="/api/endpoint/posts">
   Get all published posts with pagination support.
 </Card>
 
-<Card title="Categories" icon="folder" href="/content/api/endpoint/categories">
+<Card title="Categories" icon="folder" href="/api/endpoint/categories">
   Browse all content categories with pagination.
 </Card>
 
-<Card title="Authors" icon="users" href="/content/api/endpoint/authors">
+<Card title="Authors" icon="users" href="/api/endpoint/authors">
   List all authors with their associated content.
 </Card>
 
-<Card title="Tags" icon="tag" href="/content/api/endpoint/tags">
+<Card title="Tags" icon="tag" href="/api/endpoint/tags">
   Retrieve all content tags with pagination.
 </Card>
 </CardGroup>

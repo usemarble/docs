@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
-  "name": "Marble",
+  "name": "Marble Documentation",
   "colors": {
     "primary": "#584dff",
     "light": "#7b73ff",
@@ -17,7 +17,15 @@
         "title": "Open in T3 Chat",
         "description": "Ask questions about this page",
         "icon": "https://t3.chat/favicon.ico",
-        "href": "https://t3.chat/"
+        "href": {
+          "base": "https://t3.chat/new",
+          "query": [
+            {
+              "key": "q",
+              "value": "Read from https://docs.marblecms.com/$path so I can ask questions about it."
+            }
+          ]
+        }
       },
       "mcp"
     ]
@@ -30,21 +38,21 @@
           {
             "group": "Get Started",
             "pages": [
-              "content/guides/introduction",
-              "content/guides/quickstart"
+              "/guides/introduction",
+              "/guides/quickstart"
             ]
           },
           {
             "group": "Integrations",
             "pages": [
-              "content/guides/integrations/astro",
-              "content/guides/integrations/nextjs",
-              "content/guides/integrations/tanstack"
+              "/guides/integrations/astro",
+              "/guides/integrations/nextjs",
+              "/guides/integrations/tanstack"
             ]
           },
           {
             "group": "Features",
-            "pages": ["content/guides/webhooks"]
+            "pages": ["/guides/webhooks"]
           }
         ]
       },
@@ -53,21 +61,21 @@
         "groups": [
           {
             "group": "Introduction",
-            "pages": ["content/api/introduction"]
+            "pages": ["/api/introduction"]
           },
           {
             "group": "Endpoints",
             "pages": [
-              "content/api/endpoint/posts",
-              "content/api/endpoint/post",
-              "content/api/endpoint/tags",
-              "content/api/endpoint/categories",
-              "content/api/endpoint/authors"
+              "/api/endpoint/posts",
+              "/api/endpoint/post",
+              "/api/endpoint/tags",
+              "/api/endpoint/categories",
+              "/api/endpoint/authors"
             ]
           },
           {
             "group": "Miscellaneous",
-            "pages": ["content/api/pagination", "content/api/types"]
+            "pages": ["/api/pagination", "/api/types"]
           }
         ]
       }

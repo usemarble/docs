@@ -1,23 +1,17 @@
 ---
-title: "TanStack Start"
-description: "Integrate Marble in your TanStack Start application"
+title: "Next.js"
+description: "Integrate Marble in your Next.js application"
 ---
 
-Getting your content to your TanStack Start site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and TanStack Start.
+Getting your content to your Next.js site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and Next.js.
 
-If you want to get started quickly, you can clone our [TanStack Start blog template](https://github.com/usemarble/tanstack-start-example).
-
-To create a new TanStack Start project, run:
-
-```bash
-npx create-start-app@latest
-```
+If you want to get started quickly, you can clone our [Next.js blog template](https://github.com/taqh/nextjs-example).
 
 <Steps>
 <Step title="Set up environment variables">
-First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env` file in the root of your TanStack Start project and add the following:
+First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env.local` file in the root of your Next.js project and add the following:
 
-```bash .env
+```bash .env.local
 MARBLE_API_URL=https://api.marblecms.com/v1
 MARBLE_WORKSPACE_KEY=your_workspace_key_here
 ```
@@ -26,7 +20,7 @@ MARBLE_WORKSPACE_KEY=your_workspace_key_here
   **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
   Your environment variables should only be accessed on the server during the
   build process. For client-side updates, use
-  [webhooks](/content/guides/webhooks) to trigger rebuilds.
+  [webhooks](/guides/webhooks) to trigger rebuilds.
 </Warning>
 
 <Tip>
@@ -34,18 +28,14 @@ You can find your Workspace Key in your Marble dashboard under the settings for 
 </Tip>
 </Step>
 
-<Step title="Create server functions">
-TanStack Start uses server functions for data fetching. These functions run on the server and can be called from your components. Create a file at `lib/query.ts`:
+<Step title="Create API utility functions">
+To make it easier to fetch data from Marble, you can create a utility file to wrap your API calls. This keeps your data-fetching logic organized and reusable.
 
-First, install the required dependencies:
-
-```bash
-npm install zod
-```
+Create a file at `lib/query.ts` (or `.js` if you're using JavaScript).
 
 <Note>
   For complete TypeScript type definitions, see our [TypeScript Types
-  reference](/content/api/types). The server functions below use these types for
+  reference](/api/types). The server functions below use these types for
   full type safety.
 </Note>
 
@@ -57,13 +47,11 @@ import type {
   MarblePostList,
   MarbleTagList,
 } from "@/types/marble";
-import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
 
 const url = process.env.MARBLE_API_URL;
 const key = process.env.MARBLE_WORKSPACE_KEY;
 
-export const getPosts = createServerFn().handler(async () => {
+export async function getPosts() {
   try {
     const raw = await fetch(`${url}/${key}/posts`);
     const data: MarblePostList = await raw.json();
@@ -71,9 +59,9 @@ export const getPosts = createServerFn().handler(async () => {
   } catch (error) {
     console.log(error);
   }
-});
+}
 
-export const getTags = createServerFn().handler(async () => {
+export async function getTags() {
   try {
     const raw = await fetch(`${url}/${key}/tags`);
     const data: MarbleTagList = await raw.json();
@@ -81,21 +69,19 @@ export const getTags = createServerFn().handler(async () => {
   } catch (error) {
     console.log(error);
   }
-});
+}
 
-export const getSinglePost = createServerFn()
-  .validator(z.string())
-  .handler(async ({ data: slug }) => {
-    try {
-      const raw = await fetch(`${url}/${key}/posts/${slug}`);
-      const data: MarblePost = await raw.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
+export async function getSinglePost(slug: string) {
+  try {
+    const raw = await fetch(`${url}/${key}/posts/${slug}`);
+    const data: MarblePost = await raw.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-export const getCategories = createServerFn().handler(async () => {
+export async function getCategories() {
   try {
     const raw = await fetch(`${url}/${key}/categories`);
     const data: MarbleCategoryList = await raw.json();
@@ -103,9 +89,9 @@ export const getCategories = createServerFn().handler(async () => {
   } catch (error) {
     console.log(error);
   }
-});
+}
 
-export const getAuthors = createServerFn().handler(async () => {
+export async function getAuthors() {
   try {
     const raw = await fetch(`${url}/${key}/authors`);
     const data: MarbleAuthorList = await raw.json();
@@ -113,41 +99,29 @@ export const getAuthors = createServerFn().handler(async () => {
   } catch (error) {
     console.log(error);
   }
-});
+}
 ```
 
 </Step>
 
 <Step title="Display a list of posts">
-Now you can use the server functions in a TanStack Start route to fetch and display a list of your posts. Create a file at `src/routes/posts/index.tsx`:
+Now you can use the `getPosts` function in a Next.js page to fetch and display a list of your blog posts. For example, in `app/blog/page.jsx`:
 
-```tsx src/routes/posts/index.tsx
-import { createFileRoute } from "@tanstack/react-router";
+```jsx app/blog/page.jsx
 import { getPosts } from "@/lib/query";
-import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/posts/")({
-  component: PostsPage,
-  loader: async () => {
-    const posts = await getPosts();
-    return posts;
-  },
-});
+// Revalidate this page every hour
+export const revalidate = 3600;
 
-function PostsPage() {
-  const { posts } = Route.useLoaderData();
-
-  if (!posts) return <div>No posts found</div>;
+export default async function BlogPage() {
+  const { posts } = await getPosts();
 
   return (
     <section>
-      <h1>Posts</h1>
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
-            <Link to="/posts/$slug" params={{ slug: post.slug }}>
-              {post.title}
-            </Link>
+            <a href={`/blog/${post.slug}`}>{post.title}</a>
           </li>
         ))}
       </ul>
@@ -159,24 +133,13 @@ function PostsPage() {
 </Step>
 
 <Step title="Display a single post">
-To display a single post, create a dynamic route in TanStack Start. Create a file at `src/routes/posts/$slug.tsx`:
+To display a single post, you can create a dynamic route in Next.js, for example at `app/blog/[slug]/page.jsx`. This page will use the `getSinglePost` function to fetch the content for a specific post.
 
-```tsx src/routes/posts/$slug.tsx
-import { createFileRoute } from "@tanstack/react-router";
+```jsx app/blog/[slug]/page.jsx
 import { getSinglePost } from "@/lib/query";
 
-export const Route = createFileRoute("/posts/$slug")({
-  component: PostPage,
-  loader: async ({ params }: { params: { slug: string } }) => {
-    const data = await getSinglePost({ data: params.slug });
-    return data;
-  },
-});
-
-function PostPage() {
-  const { post } = Route.useLoaderData();
-
-  if (!post) return <div>Post not found</div>;
+export default async function PostPage({ params }) {
+  const { post } = await getSinglePost(params.slug);
 
   return (
     <div>
@@ -205,7 +168,7 @@ npm install -D @tailwindcss/typography
 
 Add it to your Tailwind CSS configuration. If you're using Tailwind CSS v4:
 
-```css src/styles.css
+```css app/globals.css
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 ```
@@ -224,9 +187,9 @@ module.exports = {
 };
 ```
 
-Now create a `Prose` component that you can use to style your content. Create `components/Prose.tsx`:
+Now create a `Prose` component that you can use to style your content. Create `components/prose.tsx`:
 
-```tsx components/Prose.tsx
+```tsx components/prose.tsx
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "react";
 
@@ -257,23 +220,12 @@ export function Prose({ children, html, className }: ProseProps) {
 
 Now you can update your post page to use the `Prose` component:
 
-```tsx src/routes/posts/$slug.tsx
-import { createFileRoute } from "@tanstack/react-router";
+```jsx app/blog/[slug]/page.jsx
 import { getSinglePost } from "@/lib/query";
-import { Prose } from "@/components/Prose";
+import { Prose } from "@/components/prose";
 
-export const Route = createFileRoute("/posts/$slug")({
-  component: PostPage,
-  loader: async ({ params }: { params: { slug: string } }) => {
-    const data = await getSinglePost({ data: params.slug });
-    return data;
-  },
-});
-
-function PostPage() {
-  const { post } = Route.useLoaderData();
-
-  if (!post) return <div>Post not found</div>;
+export default async function PostPage({ params }) {
+  const { post } = await getSinglePost(params.slug);
 
   return (
     <div>
@@ -286,7 +238,7 @@ function PostPage() {
 
 This will give your content beautiful, readable typography with proper spacing, font sizes, and styling for headings, links, images, and other elements. You can customize the styles by modifying the classes in the `Prose` component or by extending the typography configuration in your Tailwind config.
 
-For more information about customizing the typography styles, check out [TailWind CSS Typography](https://github.com/tailwindlabs/tailwindcss-typography)!
+For more information about customizing the typography styles, check out [Tailwind CSS Typography](https://github.com/tailwindlabs/tailwindcss-typography)!
 
 </Step>
 </Steps>
