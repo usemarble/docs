@@ -52,7 +52,14 @@
           },
           {
             "group": "Features",
-            "pages": ["/guides/webhooks"]
+            "pages": ["/guides/features/webhooks"]
+          },
+          {
+            "group": "Extra",
+            "pages": [
+              "/guides/extra/reading-time",
+              "/guides/extra/table-of-contents"
+            ]
           }
         ]
       },
