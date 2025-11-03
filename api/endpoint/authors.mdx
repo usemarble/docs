@@ -9,8 +9,6 @@ curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/authors"
 ```
 
 ```javascript Node.js
-const fetch = require("node-fetch");
-
 fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/authors")
   .then((res) => res.json())
   .then((json) => console.log(json))
@@ -26,8 +24,8 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/authors")
     {
       "id": "clt92f96m000008l4gken6v2t",
       "name": "John Doe",
-      "slug": "john-doe",
       "image": "...",
+      "slug": "john-doe",
       "bio": "John is a software developer and writer.",
       "role": "Software Developer",
       "socials": [
@@ -35,9 +33,20 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/authors")
           "url": "https://twitter.com/johndoe",
           "platform": "x"
         }
-      ]
+      ],
+      "count": {
+        "posts": 0
+      }
     }
-  ]
+  ],
+  "pagination": {
+    "limit": 10,
+    "currentPage": 1,
+    "nextPage": null,
+    "previousPage": null,
+    "totalPages": 1,
+    "totalItems": 1
+  }
 }
 ```
 </ResponseExample>

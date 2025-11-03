@@ -9,8 +9,6 @@ curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/tags"
 ```
 
 ```javascript Node.js
-const fetch = require("node-fetch");
-
 fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/tags")
   .then((res) => res.json())
   .then((json) => console.log(json))
@@ -41,7 +39,15 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/tags")
         "posts": 4
       }
     }
-  ]
+  ],
+  "pagination": {
+    "limit": 10,
+    "currentPage": 1,
+    "nextPage": null,
+    "previousPage": null,
+    "totalPages": 1,
+    "totalItems": 2
+  }
 }
 ```
 </ResponseExample>

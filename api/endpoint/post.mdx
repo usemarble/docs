@@ -5,7 +5,7 @@ description: "Retrieves a single post by its identifier (slug or id)."
 
 <RequestExample>
 ```bash cURL (by slug)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marble"
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
 ```
 
 ```bash cURL (by id)
@@ -13,14 +13,12 @@ curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/clt92n38p0001
 ```
 
 ```bash cURL (with markdown format)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marble?format=markdown"
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms?format=markdown"
 ```
 
 ```javascript Node.js
-const fetch = require("node-fetch");
-
 // You can pass either a slug or an id as the identifier
-const identifier = "introducing-marble"; // or: "clt92n38p000108l48zkj41an"
+const identifier = "introducing-marblecms"; // or: "clt92n38p000108l48zkj41an"
 
 fetch(
   `https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/${identifier}`
@@ -37,7 +35,7 @@ fetch(
 {
   "post": {
     "id": "clt92n38p000108l48zkj41an",
-    "slug": "introducing-marble",
+    "slug": "introducing-marblecms",
     "title": "Introducing Marble",
     "content": "<h1>Hello World!</h1><p>This is the content of the post.</p>",
     "description": "The modern headless CMS for modern web applications.",

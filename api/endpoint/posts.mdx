@@ -9,8 +9,6 @@ curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts"
 ```
 
 ```javascript Node.js
-const fetch = require("node-fetch");
-
 fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
   .then((res) => res.json())
   .then((json) => console.log(json))
@@ -25,7 +23,7 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
   "posts": [
     {
       "id": "clt92n38p000108l48zkj41an",
-      "slug": "introducing-marble",
+      "slug": "introducing-marblecms",
       "title": "Introducing Marble",
       "content": "<h1>Hello World!</h1><p>This is the content of the post.</p>",
       "description": "The modern headless CMS for modern web applications.",
