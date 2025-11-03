@@ -22,11 +22,7 @@ export type Post = {
   coverImage: string;
   publishedAt: Date;
   updatedAt: Date;
-  authors: {
-    id: string;
-    name: string;
-    image: string;
-  }[];
+  authors: Author[];
   category: Omit<Category, "count">;
   tags: Omit<Tag, "count">[];
   attribution: {

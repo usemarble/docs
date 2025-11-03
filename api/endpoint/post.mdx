@@ -5,7 +5,7 @@ description: "Retrieves a single post by its identifier (slug or id)."
 
 <RequestExample>
 ```bash cURL (by slug)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marble"
 ```
 
 ```bash cURL (by id)
@@ -13,14 +13,14 @@ curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/clt92n38p0001
 ```
 
 ```bash cURL (with markdown format)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms?format=markdown"
+curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marble?format=markdown"
 ```
 
 ```javascript Node.js
 const fetch = require("node-fetch");
 
 // You can pass either a slug or an id as the identifier
-const identifier = "introducing-marblecms"; // or: "clt92n38p000108l48zkj41an"
+const identifier = "introducing-marble"; // or: "clt92n38p000108l48zkj41an"
 
 fetch(
   `https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/${identifier}`
@@ -37,7 +37,7 @@ fetch(
 {
   "post": {
     "id": "clt92n38p000108l48zkj41an",
-    "slug": "introducing-marblecms",
+    "slug": "introducing-marble",
     "title": "Introducing Marble",
     "content": "<h1>Hello World!</h1><p>This is the content of the post.</p>",
     "description": "The modern headless CMS for modern web applications.",
@@ -47,19 +47,36 @@ fetch(
       {
         "id": "clt92f96m000008l4gken6v2t",
         "name": "John Doe",
-        "image": "..."
+        "slug": "john-doe",
+        "image": "...",
+        "bio": "John is a software developer and writer.",
+        "role": "Software Developer",
+        "socials": [
+          {
+            "url": "https://twitter.com/johndoe",
+            "platform": "x"
+          }
+        ]
       }
     ],
     "category": {
       "id": "clt92hrnp000208l43kbo28d0",
       "name": "Announcements",
-      "slug": "announcements"
+      "slug": "announcements",
+      "description": "Latest news and updates.",
+      "count": {
+        "posts": 5
+      }
     },
     "tags": [
       {
-        "id": "clt92k3c1000408l47h5f0b5y",
-        "name": "Product",
-        "slug": "product"
+        "id": "clt92hrnp000308l4ajp74b32",
+        "name": "Tutorials",
+        "slug": "tutorials",
+        "description": null,
+        "count": {
+          "posts": 12
+        }
       }
     ],
     "attribution": null

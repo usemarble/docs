@@ -25,9 +25,9 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
   "posts": [
     {
       "id": "clt92n38p000108l48zkj41an",
-      "slug": "introducing-marblecms",
+      "slug": "introducing-marble",
       "title": "Introducing Marble",
-      "content": "...",
+      "content": "<h1>Hello World!</h1><p>This is the content of the post.</p>",
       "description": "The modern headless CMS for modern web applications.",
       "coverImage": "...",
       "publishedAt": "2024-03-05T00:00:00.000Z",
@@ -35,19 +35,36 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
         {
           "id": "clt92f96m000008l4gken6v2t",
           "name": "John Doe",
-          "image": "..."
+          "slug": "john-doe",
+          "image": "...",
+          "bio": "John is a software developer and writer.",
+          "role": "Software Developer",
+          "socials": [
+            {
+              "url": "https://twitter.com/johndoe",
+              "platform": "x"
+            }
+          ]
         }
       ],
       "category": {
         "id": "clt92hrnp000208l43kbo28d0",
         "name": "Announcements",
-        "slug": "announcements"
+        "slug": "announcements",
+        "description": "Latest news and updates.",
+        "count": {
+          "posts": 5
+        }
       },
       "tags": [
         {
           "id": "clt92k3c1000408l47h5f0b5y",
-          "name": "Product",
-          "slug": "product"
+          "name": "Tutorials",
+          "slug": "tutorials",
+          "description": null,
+          "count": {
+            "posts": 12
+          }
         }
       ],
       "attribution": null
