@@ -70,11 +70,13 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Introduction",
+            "group": "Get Started",
+            "icon": "rocket",
             "pages": ["/api/introduction"]
           },
           {
             "group": "Endpoints",
+            "icon": "link",
             "pages": [
               "/api/endpoint/posts",
               "/api/endpoint/post",
@@ -85,6 +87,7 @@
           },
           {
             "group": "Miscellaneous",
+            "icon": "cog",
             "pages": ["/api/pagination", "/api/types"]
           }
         ]
