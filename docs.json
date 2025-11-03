@@ -72,7 +72,7 @@
           {
             "group": "Get Started",
             "icon": "rocket",
-            "pages": ["/api/introduction"]
+            "pages": ["/api/introduction", "/api/getting-started"]
           },
           {
             "group": "Endpoints",

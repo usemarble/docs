@@ -1,0 +1,35 @@
+---
+title: "Getting Started"
+description: "Get started with the Marble API."
+---
+
+## Trying it out
+
+Throughout this documentation, we use an example workspace ID: `cm6ytuq9x0000i803v0isidst`. You can use this ID to make live API requests and see real responses without needing an account.
+
+For example, to get all posts from the example workspace:
+
+```bash
+$ curl https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts
+```
+
+<Note>
+  The example workspace (`cm6ytuq9x0000i803v0isidst`) does not require
+  authentication. When you are ready to use your own workspace, you will need to
+  use your workspace key in the URL path.
+</Note>
+
+## Authentication
+
+> To authorize, use this code:
+
+```bash
+# Simply include your workspace key in the URL path
+curl "https://api.marblecms.com/v1/YOUR_WORKSPACE_KEY/posts"
+```
+
+> Make sure to replace `YOUR_WORKSPACE_KEY` with your actual workspace key.
+
+When you're ready to use your own workspace, Marble authenticates your API requests using your workspace key in the URL path. If you do not include your workspace key in the URL, or use one that is incorrect or outdated, Marble returns an error.
+
+Your workspace key carries many privileges, so be sure to keep it secure! Do not share your workspace key in publicly accessible areas such as GitHub, client-side code, and so forth.
