@@ -7,6 +7,9 @@
     "light": "#7b73ff",
     "dark": "#5b4ffc"
   },
+  "styling": {
+    "eyebrows": "breadcrumbs"
+  },
   "favicon": "/favicon.svg",
   "contextual": {
     "options": [
@@ -52,14 +55,11 @@
           },
           {
             "group": "Features",
-            "pages": ["/guides/features/webhooks"]
-          },
-          {
-            "group": "Extra",
-            "pages": [
-              "/guides/extra/reading-time",
-              "/guides/extra/table-of-contents"
-            ]
+            "pages": ["/guides/features/webhooks", {
+              "group": "Extra",
+              "expanded": true,
+              "pages": ["/guides/features/extra/reading-time"]
+            }]
           }
         ]
       },
