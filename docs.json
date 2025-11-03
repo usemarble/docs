@@ -40,6 +40,7 @@
         "groups": [
           {
             "group": "Get Started",
+            "icon": "rocket",
             "pages": [
               "/guides/introduction",
               "/guides/quickstart"
@@ -47,6 +48,7 @@
           },
           {
             "group": "Integrations",
+            "icon": "link",
             "pages": [
               "/guides/integrations/astro",
               "/guides/integrations/nextjs",
@@ -55,6 +57,7 @@
           },
           {
             "group": "Features",
+            "icon": "sparkles",
             "pages": ["/guides/features/webhooks", {
               "group": "Extra",
               "expanded": true,
