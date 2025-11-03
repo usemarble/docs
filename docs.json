@@ -7,6 +7,9 @@
     "light": "#7b73ff",
     "dark": "#5b4ffc"
   },
+  "styling": {
+    "eyebrows": "breadcrumbs"
+  },
   "favicon": "/favicon.svg",
   "contextual": {
     "options": [
@@ -55,7 +58,11 @@
           {
             "group": "Features",
             "icon": "sparkles",
-            "pages": ["/guides/webhooks"]
+            "pages": ["/guides/features/webhooks", {
+              "group": "Extra",
+              "expanded": true,
+              "pages": ["/guides/features/extra/reading-time"]
+            }]
           }
         ]
       },
