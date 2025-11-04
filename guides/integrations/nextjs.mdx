@@ -5,7 +5,7 @@ description: "Integrate Marble in your Next.js application"
 
 Getting your content to your Next.js site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and Next.js.
 
-If you want to get started quickly, you can clone our [Next.js blog template](https://github.com/taqh/nextjs-example).
+If you want to get started quickly, you can clone our [Next.js blog template](https://github.com/usemarble/nextjs-example).
 
 <Steps>
 <Step title="Set up environment variables">
@@ -19,8 +19,8 @@ MARBLE_WORKSPACE_KEY=your_workspace_key_here
 <Warning>
   **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
   Your environment variables should only be accessed on the server during the
-  build process. For client-side updates, use
-  [webhooks](/guides/webhooks) to trigger rebuilds.
+  build process. For client-side updates, use [webhooks](/guides/webhooks) to
+  trigger rebuilds.
 </Warning>
 
 <Tip>
@@ -35,8 +35,8 @@ Create a file at `lib/query.ts` (or `.js` if you're using JavaScript).
 
 <Note>
   For complete TypeScript type definitions, see our [TypeScript Types
-  reference](/api/types). The server functions below use these types for
-  full type safety.
+  reference](/api/types). The server functions below use these types for full
+  type safety.
 </Note>
 
 ```typescript lib/query.ts

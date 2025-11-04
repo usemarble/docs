@@ -3,7 +3,7 @@ title: "Astro"
 description: "Integrate Marble in your Astro application"
 ---
 
-To integrate Marble in your Astro application, you first need an Astro site. If you don't have one, you can check out the [Astro documentation](https://docs.astro.build/en/tutorial/0-introduction/) to get started, or use our [Astro blog template](https://github.com/taqh/astro-example) for a ready-to-go solution.
+To integrate Marble in your Astro application, you first need an Astro site. If you don't have one, you can check out the [Astro documentation](https://docs.astro.build/en/tutorial/0-introduction/) to get started, or use our [Astro blog template](https://github.com/usemarble/astro-example) for a ready-to-go solution.
 
 Astro's **Content Collections** are the best way to manage content in your project. We'll use a **Content Loader** to fetch your posts from Marble and make them available in your Astro site with full type-safety. You can learn more about this in the [Astro Content Collections documentation](https://docs.astro.build/en/guides-collections/).
 
@@ -33,8 +33,8 @@ Next, define your content collection. This tells Astro how to fetch and validate
 This configuration defines a `posts` collection, and includes a loader function that fetches your posts from the Marble API.
 
 <Note>
-  For complete TypeScript type definitions, see our [Types reference](/api/types). The schema below matches the `Post` type from
-  the API.
+  For complete TypeScript type definitions, see our [Types
+  reference](/api/types). The schema below matches the `Post` type from the API.
 </Note>
 
 ```typescript src.config.ts
@@ -54,31 +54,37 @@ const PostSchema = z.object({
   coverImage: z.string().url(),
   publishedAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-  authors: z.array(z.object({
-  id: z.string(),
-  name: z.string(),
-  slug: z.string(),
-  image: z.string().nullable(),
-  bio: z.string().nullable(),
-  role: z.string().nullable(),
-  socials: z.array(SocialSchema),
-  })),
+  authors: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      slug: z.string(),
+      image: z.string().nullable(),
+      bio: z.string().nullable(),
+      role: z.string().nullable(),
+      socials: z.array(SocialSchema),
+    })
+  ),
   category: z.object({
     id: z.string(),
     slug: z.string(),
     name: z.string(),
     description: z.string().nullable(),
   }),
-  tags: z.array(z.object({
-    id: z.string(),
-    slug: z.string(),
-    name: z.string(),
-    description: z.string().nullable(),
-  })),
-  attribution: z.object({
-    author: z.string(),
-    url: z.string().url(),
-  }).nullable(),
+  tags: z.array(
+    z.object({
+      id: z.string(),
+      slug: z.string(),
+      name: z.string(),
+      description: z.string().nullable(),
+    })
+  ),
+  attribution: z
+    .object({
+      author: z.string(),
+      url: z.string().url(),
+    })
+    .nullable(),
 });
 
 type Post = z.infer<typeof PostSchema>;
@@ -166,4 +172,4 @@ We use the `set:html` directive to render the post content. Marble sanitizes all
 </Step>
 </Steps>
 
-That's it! You now have a fully functional blog in your Astro project powered by Marble. For a complete, ready-to-use example, you can clone our [Astro blog template](https://github.com/taqh/astro-example).
+That's it! You now have a fully functional blog in your Astro project powered by Marble. For a complete, ready-to-use example, you can clone our [Astro blog template](https://github.com/usemarble/astro-example).
