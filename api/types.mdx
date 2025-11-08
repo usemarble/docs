@@ -126,8 +126,37 @@ export type MarbleAuthorListResponse = {
 ```
 
 <Tip>
-Copy these type definitions into a `types/marble.ts` file in your project. In the future, we will also provide a package that you can install to keep your types centralized across multiple projects.
+Copy these type definitions into a `types/marble.ts` file in your project. If you prefer a published package, we also provide an official npm package that exports these types .
 </Tip>
+
+### NPM package
+
+We published an official npm package, `@usemarble/core`, that exports the TypeScript types and zod schemas shown on this page. Installing the package avoids copying the type definitions into multiple projects.
+
+To install the package run:
+
+<CodeGroup>
+```bash npm
+npm install @usemarble/core
+```
+```bash yarn
+yarn add @usemarble/core
+```
+```bash pnpm
+pnpm add @usemarble/core
+```
+```bash bun
+bun add @usemarble/core
+```
+</CodeGroup>
+
+You can import the types like this:
+
+```ts
+import { MarblePos } from "@usemarble/core"
+```
+
+The package will be kept up-to-date with the API types and provides a reliable implementation of the webhook signature verification used in our examples.
 
 ### Zod Schemas
 
