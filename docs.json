@@ -2,15 +2,26 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
   "name": "Marble Documentation",
+  "description": "Documentation for Marble, the simple headless CMS for writers and developers.",
   "colors": {
     "primary": "#584dff",
     "light": "#7b73ff",
     "dark": "#5b4ffc"
   },
   "styling": {
-    "eyebrows": "breadcrumbs"
+    "eyebrows": "breadcrumbs",
+    "codeblocks": {
+      "theme": {
+        "light": "github-light",
+        "dark": "github-dark"
+      }
+    }
   },
   "favicon": "/favicon.svg",
+  "banner": {
+    "content": "New: We now offer a 7-day free trial for Marble Pro subscriptions.",
+    "dismissible": false
+  },
   "contextual": {
     "options": [
       "copy",
@@ -58,7 +69,7 @@
           {
             "group": "Features",
             "icon": "sparkles",
-            "pages": ["/guides/features/webhooks", {
+            "pages": ["/guides/features/webhooks", "/guides/features/import", {
               "group": "Extra",
               "expanded": true,
               "pages": ["/guides/features/extra/reading-time"]
