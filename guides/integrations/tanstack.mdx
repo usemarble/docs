@@ -84,7 +84,7 @@ export const getTags = createServerFn().handler(async () => {
 });
 
 export const getSinglePost = createServerFn()
-  .validator(z.string())
+  .inputValidator(z.string())
   .handler(async ({ data: slug }) => {
     try {
       const raw = await fetch(`${url}/${key}/posts/${slug}`);
