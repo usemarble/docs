@@ -1,0 +1,13 @@
+<script
+    src="https://cdn.databuddy.cc/databuddy.js"
+    data-client-id="CmLSzbkHhoPH9M1D8OOwQ"
+    data-track-outgoing-links="true"
+    data-track-interactions="true"
+    data-track-engagement="true"
+    data-track-scroll-depth="true"
+    data-track-bounce-rate="true"
+    data-track-web-vitals="true"
+    data-enable-batching="true"
+    crossorigin="anonymous"
+    async
+  ></script>
