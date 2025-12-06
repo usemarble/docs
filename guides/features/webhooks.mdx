@@ -30,16 +30,25 @@ Create a serverless function that listens for a `post.published` event from a Ma
 - Share the post on social media
 - Sync the content to another service or backup location
 
-## Setting Up Webhooks in Marble
+## Setting up webhooks in Marble
 
-1. **Navigate to Webhooks**: On the Marble dashboard, go to the "Webhooks" section.
-2. **Create a New Webhook**: Click on "Create Webhook" and fill in the required details:
-   - **Name**: A descriptive name for your webhook.
-   - **URL**: The endpoint where the webhook payload will be sent.
-   - **Format**: Choose the payload format (Currently only JSON is supported).
-   - **Events**: Select the events you want to listen for (e.g., `post.published`, `post.updated`).
-3. **Save the Webhook**: Once you've filled in the details, save your webhook.
-4. **Copy the Webhook Secret**: After creating the webhook, click the 3 dots on the top right and click the ***Copy secret*** button. You will need it to verify the authenticity of incoming requests.
+<Steps>
+  <Step title="Navigate to Webhooks">
+    On the Marble dashboard, go to the **Webhooks** section.
+  </Step>
+  
+  <Step title="Create a New Webhook">
+    Click **Create Webhook** and fill in the required details:
+    - **Name**: A descriptive name for your webhook
+    - **URL**: The endpoint where the webhook payload will be sent
+    - **Format**: Choose the payload format (currently only JSON is supported)
+    - **Events**: Select the events you want to listen for (e.g., `post.published`, `post.updated`)
+  </Step>
+  
+  <Step title="Save and Copy Secret">
+    Save your webhook, then click the 3 dots on the top right and select **Copy secret**. You'll need this to verify the authenticity of incoming requests.
+  </Step>
+</Steps>
 
 ### Verifying Webhook Requests
 
