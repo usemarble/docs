@@ -5,27 +5,30 @@ description: Using webhooks to trigger builds and automate workflows.
 
 Webhooks provide a powerful way to keep your site's content fresh and automate workflows. When an event occurs in your Marble workspace (like publishing a post), we can send an HTTP POST payload to a URL you configure. Webhooks are powered by [Upstash QStash](https://upstash.com?utm_source=marble-docs), ensuring reliable delivery of events.
 
-## Use Cases
+## Use cases
 
-### Content Revalidation
+<CardGroup cols={2}>
+  <Card title="Content Revalidation" icon="rotate">
+    For statically generated sites (SSG) built with frameworks like Next.js, Astro, or Nuxt, content is fetched when you build your site. Webhooks allow you to trigger instant revalidation when content changes.
+  </Card>
+  <Card title="Automating Workflows" icon="bolt">
+    Automate tasks like sending newsletters, sharing on social media, or syncing content to other services when posts are published or updated.
+  </Card>
+</CardGroup>
 
-For statically generated sites (SSG) built with frameworks like Next.js, Astro, or Nuxt, content is fetched when you build your site. If you update a post in Marble, the change won't be live until you trigger a new deployment.
+### Content revalidation
 
-Webhooks solve this by allowing you to trigger a revalidation of your site's content.
+For statically generated sites, content is fetched at build time. If you update a post in Marble, the change won't be live until you trigger a new deployment.
 
 Frameworks like Next.js provide built-in solutions for this, such as [Incremental Static Regeneration (ISR)](https://nextjs.org/docs/app/guides/incremental-static-regeneration), which can be triggered on-demand by a webhook for instant updates.
 
-### Automating Workflows
+### Automating workflows
 
-Webhooks can also be used to automate other tasks. For example, you could create a serverless function that listens for a `post.published` event from a Marble webhook.
+Create a serverless function that listens for a `post.published` event from a Marble webhook. When triggered, your function can:
 
-When a new post is published, the webhook sends the post data to your function, which can then:
-
-- Send a newsletter to your subscribers with the new post.
-- Share the post on social media.
-- Sync the content to another service or backup location.
-
-By listening for specific events, you can build powerful, event-driven automations tailored to your needs.
+- Send a newsletter to your subscribers with the new post
+- Share the post on social media
+- Sync the content to another service or backup location
 
 ## Setting Up Webhooks in Marble
 
