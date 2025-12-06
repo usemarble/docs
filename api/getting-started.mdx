@@ -23,18 +23,16 @@ curl https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts
 
 ## Authentication
 
-> To authorize, use this code:
+When you're ready to use your own workspace, Marble authenticates your API requests using your workspace key in the URL path.
 
 ```bash
-# Simply include your workspace key in the URL path
 curl "https://api.marblecms.com/v1/YOUR_WORKSPACE_KEY/posts"
 ```
 
-> Make sure to replace `YOUR_WORKSPACE_KEY` with your actual workspace key.
+<Info>
+  Replace `YOUR_WORKSPACE_KEY` with your actual workspace key found in your Marble dashboard under **Settings > General**.
+</Info>
 
-When you're ready to use your own workspace, Marble authenticates your API requests using your workspace key in the URL path. If you do not include your workspace key in the URL, or use one that is incorrect or outdated, Marble returns an error.
-
-The workspace key can be found in your Marble dashboard under `settings > general` and should not be shared publicly.
-
-
-Your workspace key carries many privileges, so be sure to keep it secure! Do not share your workspace key in publicly accessible areas such as GitHub, client-side code, and so forth.
+<Warning>
+  Your workspace key carries many privileges, so be sure to keep it secure! Do not share your workspace key in publicly accessible areas such as GitHub, client-side code, and so forth.
+</Warning>
