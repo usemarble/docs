@@ -50,11 +50,13 @@ Create a serverless function that listens for a `post.published` event from a Ma
   </Step>
 </Steps>
 
-### Verifying Webhook Requests
+### Verifying webhook requests
 
 To ensure that incoming webhook requests are from Marble and haven't been tampered with, you can verify the request using the webhook secret.
 
-If you don't want to copy the verification code into your project, we published an official npm package, `@usemarble/core`, which exports a `verifyMarbleSignature` helper you can use directly. Install it with `npm install @usemarble/core` and then import the helper where needed.
+<Tip>
+  We published an official npm package, `@usemarble/core`, which exports a `verifyMarbleSignature` helper. Install it with `npm install @usemarble/core` to skip manual verification code.
+</Tip>
 
 Here's an example of how to verify a webhook request in Next.js using the `crypto` module (or use `verifyMarbleSignature` from `@usemarble/core` instead of copying this function):
 
