@@ -94,7 +94,7 @@
           },
           {
             "group": "Endpoints",
-            "icon": "link",
+            "icon": "square-terminal",
             "pages": [
               "/api/endpoint/posts",
               "/api/endpoint/post",
@@ -105,7 +105,7 @@
           },
           {
             "group": "Miscellaneous",
-            "icon": "cog",
+            "icon": "circle-help",
             "pages": [
               "/api/pagination",
               "/api/rate-limits",
