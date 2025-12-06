@@ -15,7 +15,8 @@
         "light": "github-light",
         "dark": "github-dark"
       }
-    }
+    },
+    "backgroundDecorationGradient": true
   },
   "favicon": "/favicon.svg",
   "banner": {
