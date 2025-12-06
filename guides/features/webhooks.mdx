@@ -5,44 +5,58 @@ description: Using webhooks to trigger builds and automate workflows.
 
 Webhooks provide a powerful way to keep your site's content fresh and automate workflows. When an event occurs in your Marble workspace (like publishing a post), we can send an HTTP POST payload to a URL you configure. Webhooks are powered by [Upstash QStash](https://upstash.com?utm_source=marble-docs), ensuring reliable delivery of events.
 
-## Use Cases
+## Use cases
 
-### Content Revalidation
+<CardGroup cols={2}>
+  <Card title="Content Revalidation" icon="rotate">
+    For statically generated sites (SSG) built with frameworks like Next.js, Astro, or Nuxt, content is fetched when you build your site. Webhooks allow you to trigger instant revalidation when content changes.
+  </Card>
+  <Card title="Automating Workflows" icon="bolt">
+    Automate tasks like sending newsletters, sharing on social media, or syncing content to other services when posts are published or updated.
+  </Card>
+</CardGroup>
 
-For statically generated sites (SSG) built with frameworks like Next.js, Astro, or Nuxt, content is fetched when you build your site. If you update a post in Marble, the change won't be live until you trigger a new deployment.
+### Content revalidation
 
-Webhooks solve this by allowing you to trigger a revalidation of your site's content.
+For statically generated sites, content is fetched at build time. If you update a post in Marble, the change won't be live until you trigger a new deployment.
 
 Frameworks like Next.js provide built-in solutions for this, such as [Incremental Static Regeneration (ISR)](https://nextjs.org/docs/app/guides/incremental-static-regeneration), which can be triggered on-demand by a webhook for instant updates.
 
-### Automating Workflows
+### Automating workflows
 
-Webhooks can also be used to automate other tasks. For example, you could create a serverless function that listens for a `post.published` event from a Marble webhook.
+Create a serverless function that listens for a `post.published` event from a Marble webhook. When triggered, your function can:
 
-When a new post is published, the webhook sends the post data to your function, which can then:
+- Send a newsletter to your subscribers with the new post
+- Share the post on social media
+- Sync the content to another service or backup location
 
-- Send a newsletter to your subscribers with the new post.
-- Share the post on social media.
-- Sync the content to another service or backup location.
+## Setting up webhooks in Marble
 
-By listening for specific events, you can build powerful, event-driven automations tailored to your needs.
+<Steps>
+  <Step title="Navigate to Webhooks">
+    On the Marble dashboard, go to the **Webhooks** section.
+  </Step>
+  
+  <Step title="Create a New Webhook">
+    Click **Create Webhook** and fill in the required details:
+    - **Name**: A descriptive name for your webhook
+    - **URL**: The endpoint where the webhook payload will be sent
+    - **Format**: Choose the payload format (currently only JSON is supported)
+    - **Events**: Select the events you want to listen for (e.g., `post.published`, `post.updated`)
+  </Step>
+  
+  <Step title="Save and Copy Secret">
+    Save your webhook, then click the 3 dots on the top right and select **Copy secret**. You'll need this to verify the authenticity of incoming requests.
+  </Step>
+</Steps>
 
-## Setting Up Webhooks in Marble
-
-1. **Navigate to Webhooks**: On the Marble dashboard, go to the "Webhooks" section.
-2. **Create a New Webhook**: Click on "Create Webhook" and fill in the required details:
-   - **Name**: A descriptive name for your webhook.
-   - **URL**: The endpoint where the webhook payload will be sent.
-   - **Format**: Choose the payload format (Currently only JSON is supported).
-   - **Events**: Select the events you want to listen for (e.g., `post.published`, `post.updated`).
-3. **Save the Webhook**: Once you've filled in the details, save your webhook.
-4. **Copy the Webhook Secret**: After creating the webhook, click the 3 dots on the top right and click the ***Copy secret*** button. You will need it to verify the authenticity of incoming requests.
-
-### Verifying Webhook Requests
+### Verifying webhook requests
 
 To ensure that incoming webhook requests are from Marble and haven't been tampered with, you can verify the request using the webhook secret.
 
-If you don't want to copy the verification code into your project, we published an official npm package, `@usemarble/core`, which exports a `verifyMarbleSignature` helper you can use directly. Install it with `npm install @usemarble/core` and then import the helper where needed.
+<Tip>
+  We published an official npm package, `@usemarble/core`, which exports a `verifyMarbleSignature` helper. Install it with `npm install @usemarble/core` to skip manual verification code.
+</Tip>
 
 Here's an example of how to verify a webhook request in Next.js using the `crypto` module (or use `verifyMarbleSignature` from `@usemarble/core` instead of copying this function):
 

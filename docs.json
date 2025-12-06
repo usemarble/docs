@@ -59,7 +59,7 @@
           },
           {
             "group": "Integrations",
-            "icon": "link",
+            "icon": "plug",
             "pages": [
               "/guides/integrations/astro",
               "/guides/integrations/nextjs",
@@ -69,11 +69,18 @@
           {
             "group": "Features",
             "icon": "sparkles",
-            "pages": ["/guides/features/webhooks", "/guides/features/import", {
-              "group": "Extra",
-              "expanded": true,
-              "pages": ["/guides/features/extra/reading-time"]
-            }]
+            "pages": [
+              {
+                "page": "/guides/features/webhooks",
+                "tag": "NEW"
+              },
+              "/guides/features/import",
+              {
+                "group": "Extra",
+                "expanded": true,
+                "pages": ["/guides/features/extra/reading-time"]
+              }
+            ]
           }
         ]
       },
@@ -87,7 +94,7 @@
           },
           {
             "group": "Endpoints",
-            "icon": "link",
+            "icon": "square-terminal",
             "pages": [
               "/api/endpoint/posts",
               "/api/endpoint/post",
@@ -98,7 +105,7 @@
           },
           {
             "group": "Miscellaneous",
-            "icon": "cog",
+            "icon": "circle-help",
             "pages": [
               "/api/pagination",
               "/api/rate-limits",
