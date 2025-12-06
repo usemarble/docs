@@ -69,11 +69,18 @@
           {
             "group": "Features",
             "icon": "sparkles",
-            "pages": ["/guides/features/webhooks", "/guides/features/import", {
-              "group": "Extra",
-              "expanded": true,
-              "pages": ["/guides/features/extra/reading-time"]
-            }]
+            "pages": [
+              {
+                "page": "/guides/features/webhooks",
+                "tag": "NEW"
+              },
+              "/guides/features/import",
+              {
+                "group": "Extra",
+                "expanded": true,
+                "pages": ["/guides/features/extra/reading-time"]
+              }
+            ]
           }
         ]
       },
