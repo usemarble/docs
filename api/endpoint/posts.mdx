@@ -4,6 +4,7 @@ description: "Retrieves a paginated list of posts in a workspace."
 ---
 
 <RequestExample>
+<CodeGroup>
 ```bash cURL
 curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts"
 ```
@@ -15,6 +16,13 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
   .catch((err) => console.error("error:" + err));
 ```
 
+```python Python
+import requests
+
+response = requests.get("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts")
+print(response.json())
+```
+</CodeGroup>
 </RequestExample>
 
 <ResponseExample>
