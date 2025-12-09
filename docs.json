@@ -56,32 +56,28 @@
             "group": "Get Started",
             "icon": "rocket",
             "pages": [
-              "/guides/introduction",
-              "/guides/quickstart"
+              "guides/introduction",
+              "guides/quickstart"
             ]
           },
           {
             "group": "Integrations",
             "icon": "plug",
             "pages": [
-              "/guides/integrations/astro",
-              "/guides/integrations/nextjs",
-              "/guides/integrations/tanstack"
+              "guides/integrations/astro",
+              "guides/integrations/nextjs",
+              "guides/integrations/tanstack"
             ]
           },
           {
             "group": "Features",
             "icon": "sparkles",
             "pages": [
-              {
-                "page": "/guides/features/webhooks",
-                "tag": "NEW"
-              },
-              "/guides/features/import",
+              "guides/features/webhooks",
+              "guides/features/import",
               {
                 "group": "Extra",
-                "expanded": true,
-                "pages": ["/guides/features/extra/reading-time"]
+                "pages": ["guides/features/extra/reading-time"]
               }
             ]
           }
@@ -93,26 +89,26 @@
           {
             "group": "Get Started",
             "icon": "rocket",
-            "pages": ["/api/introduction", "/api/getting-started"]
+            "pages": ["api/introduction", "api/getting-started"]
           },
           {
             "group": "Endpoints",
             "icon": "square-terminal",
             "pages": [
-              "/api/endpoint/posts",
-              "/api/endpoint/post",
-              "/api/endpoint/tags",
-              "/api/endpoint/categories",
-              "/api/endpoint/authors"
+              "api/endpoint/posts",
+              "api/endpoint/post",
+              "api/endpoint/tags",
+              "api/endpoint/categories",
+              "api/endpoint/authors"
             ]
           },
           {
             "group": "Miscellaneous",
             "icon": "circle-help",
             "pages": [
-              "/api/pagination",
-              "/api/rate-limits",
-              "/api/types"
+              "api/pagination",
+              "api/rate-limits",
+              "api/types"
             ]
           }
         ]
