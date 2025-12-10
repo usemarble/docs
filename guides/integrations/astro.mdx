@@ -1,7 +1,11 @@
 ---
-title: "Astro"
-description: "Integrate Marble in your Astro application"
+title: Integrate Marble CMS with Astro
+description: Use Marble CMS with Astro Content Collections. Fetch blog posts with type-safe loaders, generate static pages, and render content with full TypeScript support.
 ---
+
+## Overview
+
+This guide shows you how to integrate Marble CMS with Astro using Content Collections. You'll learn how to fetch blog posts with type-safe loaders, generate static pages, and render content with full TypeScript support.
 
 To integrate Marble in your Astro application, you first need an Astro site. If you don't have one, you can check out the [Astro documentation](https://docs.astro.build/en/tutorial/0-introduction/) to get started, or use our [Astro blog template](https://github.com/usemarble/astro-example) for a ready-to-go solution.
 
@@ -33,8 +37,7 @@ Next, define your content collection. This tells Astro how to fetch and validate
 This configuration defines a `posts` collection, and includes a loader function that fetches your posts from the Marble API.
 
 <Note>
-  For complete TypeScript type definitions, see our [Types
-  reference](/api/types). The schema below matches the `Post` type from the API.
+  For complete TypeScript type definitions, see our [TypeScript types reference](/api/types). The schema below matches the `Post` type from the Marble API.
 </Note>
 
 ```typescript src.config.ts
