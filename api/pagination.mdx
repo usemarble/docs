@@ -3,11 +3,13 @@ title: Marble API pagination guide
 description: Learn how to use offset-based pagination in Marble CMS API. Control page size, navigate pages, and handle pagination metadata for posts, categories, tags, and authors.
 ---
 
-Marble API uses offset-based pagination for endpoints that return multiple items. Pagination metadata is included in every response to help you navigate through large datasets efficiently.
+## What is pagination?
 
-## How Pagination Works
+Marble API uses offset-based pagination for endpoints that return multiple items. Pagination allows you to retrieve large datasets in smaller, manageable chunks rather than loading everything at once.
 
-When you request a list of resources (like posts), the API automatically includes pagination information in the response. This allows you to:
+## How pagination works in Marble API
+
+When you request a list of resources (like posts, categories, or tags), the API automatically includes pagination metadata in every response. This allows you to:
 
 - Control how many items are returned per request
 - Navigate to specific pages
