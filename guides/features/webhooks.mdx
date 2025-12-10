@@ -153,7 +153,7 @@ export async function POST(request: Request) {
 }
 ```
 
-<Note>If you want a better guide on how to invalidate cache in your framework of choice, you can check out our blog post on [Using Marble's Webhooks with the Next.js App Router](https://marblecms.com/blog/nextjs-webhooks-with-marble).</Note>
+<Note>For a detailed guide on cache invalidation in Next.js, see our blog post on [Using Marble's Webhooks with the Next.js App Router](https://marblecms.com/blog/nextjs-webhooks-with-marble). For other frameworks, check our [integration guides](/guides/integrations/nextjs).</Note>
 
 Marble will send the signature in the `x-marble-signature` header of the request. You can use this signature to verify the authenticity of the request. Make sure to add the `process.env.MARBLE_WEBHOOK_SECRET` environment variable.
 
