@@ -5,9 +5,9 @@ description: Understand Marble CMS API rate limiting with 200 requests per 10 se
 
 Marble applies global rate limits to protect the stability of the API for all users. This page explains the limits, how they are calculated, and how to design your integration to handle them gracefully.
 
-## Overview
+## What are rate limits?
 
-Marble API uses rate limiting to ensure fair usage and API stability. Rate limits are enforced per workspace using a sliding window approach.
+Rate limits control how many API requests you can make within a specific time window. Marble API uses rate limiting to ensure fair usage and API stability for all users. Rate limits are enforced per workspace using a sliding window approach.
 
 <Info>
 Most applications will not hit these limits during normal use, but you should still build in defensive handling for rate limit responses.
