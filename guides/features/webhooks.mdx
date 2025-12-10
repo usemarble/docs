@@ -4,7 +4,11 @@ description: Use Marble CMS webhooks to trigger builds, revalidate content, and 
 tag: "NEW"
 ---
 
-Webhooks provide a powerful way to keep your site's content fresh and automate workflows. When an event occurs in your Marble workspace (like publishing a post), we can send an HTTP POST payload to a URL you configure. Webhooks are powered by [Upstash QStash](https://upstash.com?utm_source=marble-docs), ensuring reliable delivery of events.
+## What are webhooks?
+
+Webhooks provide a powerful way to keep your site's content fresh and automate workflows. When an event occurs in your Marble CMS workspace (like publishing a post), Marble sends an HTTP POST request with event data to a URL you configure. 
+
+Marble webhooks are powered by [Upstash QStash](https://upstash.com?utm_source=marble-docs), ensuring reliable delivery of events with automatic retries.
 
 ## Use cases
 
