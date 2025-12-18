@@ -10,17 +10,62 @@ The Marble API is organized around REST. Our API has predictable resource-orient
 All API access is over HTTPS and is accessed from the `api.marblecms.com` domain. All data is sent and received as JSON.
 
 ```
-https://api.marblecms.com/v1/:workspaceKey/:resource
+https://api.marblecms.com/v1/:resource
 ```
 
-Where:
-- `:workspaceKey` is your unique workspace key
-- `:resource` is the specific resource you want to interact with (e.g., `posts`, `categories`, `tags`)
+Where `:resource` is the specific resource you want to interact with (e.g., `posts`, `categories`, `tags`, `authors`).
 
-<Info>
-  In the future Marble may support a more fine-grained authentication mechanism using API-Keys, but for now, the workspace key is sufficient.
-</Info>
+## Authentication
 
-<Note>
-  All timestamps are in UTC ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`
-</Note>
+Marble authenticates API requests using API keys. You can create and manage API keys from your workspace dashboard under **Settings > API Keys**.
+
+Include your API key in the `Authorization` header of every request:
+
+```bash
+curl -H "Authorization: YOUR_API_KEY" https://api.marblecms.com/v1/posts
+```
+
+Alternatively, you can pass the API key as a query parameter:
+
+```bash
+curl "https://api.marblecms.com/v1/posts?key=YOUR_API_KEY"
+```
+
+<Warning>
+  Your API key carries many privileges, so be sure to keep it secure! Do not
+  share your API key in publicly accessible areas such as GitHub, client-side
+  code, and so forth.
+</Warning>
+
+<Tip>
+  **Best Practice:** Use the `Authorization` header for all requests. Query
+  parameters may be logged in server access logs.
+</Tip>
+
+## Response Format
+
+All responses are returned as JSON. Successful responses include the requested data, while errors include an `error` field with details.
+
+<Note>All timestamps are in UTC ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`</Note>
+
+## Error Handling
+
+The API uses conventional HTTP response codes to indicate the success or failure of a request:
+
+| Code  | Description                               |
+| ----- | ----------------------------------------- |
+| `200` | Success                                   |
+| `400` | Bad Request - Invalid parameters          |
+| `401` | Unauthorized - Invalid or missing API key |
+| `404` | Not Found - Resource doesn't exist        |
+| `429` | Too Many Requests - Rate limit exceeded   |
+| `500` | Internal Server Error                     |
+
+Example error response:
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "API key required. Provide via Authorization header or ?key= query parameter"
+}
+```

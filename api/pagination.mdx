@@ -17,15 +17,12 @@ When you request a list of resources (like posts), the API automatically include
 ## Query Parameters
 
 <ParamField query="limit" type="integer" default="10">
-  The maximum number of items to return per page. 
-  
-  **Range:** 1-200 items per page
+  The maximum number of items to return per page. **Range:** 1-200 items per
+  page
 </ParamField>
 
 <ParamField query="page" type="integer" default="1">
-  The page number to retrieve. Pages start at 1.
-  
-  **Minimum:** 1
+  The page number to retrieve. Pages start at 1. **Minimum:** 1
 </ParamField>
 
 ## Pagination Response
@@ -59,6 +56,7 @@ Every paginated response includes a `pagination` object with the following field
     <ResponseField name="totalItems" type="integer">
       The total number of items across all pages.
     </ResponseField>
+
   </Expandable>
 </ResponseField>
 
@@ -69,24 +67,30 @@ Every paginated response includes a `pagination` object with the following field
 Get the first page with default limit (10 items):
 
 ```bash cURL
-curl -X GET 'https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts'
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/posts"
 ```
+
 </Tab>
 
 <Tab title="Custom Limit">
 Get 5 items per page:
 
 ```bash cURL
-curl -X GET 'https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts?limit=5'
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/posts?limit=5"
 ```
+
 </Tab>
 
 <Tab title="Specific Page">
 Get page 2 with 5 items per page:
 
 ```bash cURL
-curl -X GET 'https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts?page=2&limit=5'
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/posts?page=2&limit=5"
 ```
+
 </Tab>
 </Tabs>
 
@@ -99,8 +103,8 @@ curl -X GET 'https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts?page=2&limit=5
       "slug": "getting-started-with-cms-integration",
       "title": "Getting Started with CMS Integration",
       "content": "<p>Learn how to integrate your content management system...</p>",
-      "coverImage": "https://images.example.com/media/cms-integration-guide.webp",
-      "description": "A comprehensive guide to integrating your CMS with modern web frameworks...",
+      "coverImage": "https://cdn.marblecms.com/images/cms-guide.webp",
+      "description": "A comprehensive guide to integrating your CMS...",
       "publishedAt": "2024-01-15T10:30:00.000Z",
       "updatedAt": "2024-01-20T14:22:33.456Z",
       "attribution": null,
@@ -108,7 +112,7 @@ curl -X GET 'https://api.marblecms.com/v1/YOUR_WORKSPACE_ID/posts?page=2&limit=5
         {
           "id": "author_xyz789",
           "name": "John Smith",
-          "image": "https://images.example.com/avatars/john-smith.jpg"
+          "image": "https://cdn.marblecms.com/avatars/john.jpg"
         }
       ],
       "category": {
@@ -191,17 +195,20 @@ The following endpoints support pagination:
 ## Best Practices
 
 <Tip>
-**Optimize Performance**: Use smaller page sizes (5-20 items) for better performance, especially on mobile devices.
+  **Optimize Performance**: Use smaller page sizes (5-20 items) for better
+  performance, especially on mobile devices.
 </Tip>
 
 <Tip>
-**Handle Empty Results**: Always check if the `posts` array is empty and handle the empty state in your UI.
+  **Handle Empty Results**: Always check if the data array is empty and handle
+  the empty state in your UI.
 </Tip>
 
 <Note>
-**Navigation Logic**: Use `nextPage` and `previousPage` values to build navigation controls. These fields will be `null` when navigation in that direction isn't possible.
+  **Navigation Logic**: Use `nextPage` and `previousPage` values to build
+  navigation controls. These fields will be `null` when navigation in that
+  direction isn't possible.
 </Note>
-
 
 ## Error Handling
 
@@ -224,12 +231,11 @@ The following endpoints support pagination:
 </Accordion>
 
 <Accordion title="Invalid limit value">
-  - Values below 1 will default to 1
-  - Values above 200 will be capped at 200  
-  - Non-numeric values will default to 10
+  - Values below 1 will default to 1 - Values above 200 will be capped at 200 -
+  Non-numeric values will default to 10
 </Accordion>
 
 <Accordion title="Empty datasets">
-  When there are no posts, `totalPages` will be 0 and `totalItems` will be 0. The `posts` array will be empty.
+  When there are no items, `totalPages` will be 0 and `totalItems` will be 0. The data array will be empty.
 </Accordion>
 </AccordionGroup>

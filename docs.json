@@ -57,7 +57,8 @@
             "icon": "rocket",
             "pages": [
               "guides/introduction",
-              "guides/quickstart"
+              "guides/quickstart",
+              "guides/sdk"
             ]
           },
           {

@@ -1,31 +1,43 @@
 ---
 title: "Get a Single Post"
-description: "Retrieves a single post by its identifier (slug or id)."
+description: "Retrieves a single post by its slug or ID."
+api: "GET /v1/posts/:identifier"
 ---
+
+Fetch a specific post using either its unique slug or ID. Both identifiers work interchangeably.
 
 <RequestExample>
 ```bash cURL (by slug)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms"
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/posts/introducing-marblecms"
 ```
 
-```bash cURL (by id)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/clt92n38p000108l48zkj41an"
+```bash cURL (by ID)
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/posts/clt92n38p000108l48zkj41an"
 ```
 
-```bash cURL (with markdown format)
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/introducing-marblecms?format=markdown"
+```javascript JavaScript
+const identifier = "introducing-marblecms"; // or use the post ID
+
+const response = await fetch(
+  `https://api.marblecms.com/v1/posts/${identifier}`,
+  { headers: { Authorization: "YOUR_API_KEY" } }
+);
+const data = await response.json();
+console.log(data.post);
 ```
 
-```javascript Node.js
-// You can pass either a slug or an id as the identifier
-const identifier = "introducing-marblecms"; // or: "clt92n38p000108l48zkj41an"
+```python Python
+import requests
 
-fetch(
-  `https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/posts/${identifier}`
+identifier = "introducing-marblecms"  # or use the post ID
+
+response = requests.get(
+    f"https://api.marblecms.com/v1/posts/{identifier}",
+    headers={"Authorization": "YOUR_API_KEY"}
 )
-  .then((res) => res.json())
-  .then((json) => console.log(json))
-  .catch((err) => console.error("error:" + err));
+print(response.json())
 ```
 
 </RequestExample>
@@ -40,21 +52,19 @@ fetch(
     "content": "<h1>Hello World!</h1><p>This is the content of the post.</p>",
     "featured": true,
     "description": "The modern headless CMS for modern web applications.",
-    "coverImage": "...",
+    "coverImage": "https://cdn.marblecms.com/images/cover.jpg",
     "publishedAt": "2024-03-05T00:00:00.000Z",
+    "updatedAt": "2024-03-10T12:00:00.000Z",
     "authors": [
       {
         "id": "clt92f96m000008l4gken6v2t",
         "name": "John Doe",
         "slug": "john-doe",
-        "image": "...",
+        "image": "https://cdn.marblecms.com/avatars/john.jpg",
         "bio": "John is a software developer and writer.",
         "role": "Software Developer",
         "socials": [
-          {
-            "url": "https://twitter.com/johndoe",
-            "platform": "x"
-          }
+          { "url": "https://twitter.com/johndoe", "platform": "x" }
         ]
       }
     ],
@@ -62,20 +72,14 @@ fetch(
       "id": "clt92hrnp000208l43kbo28d0",
       "name": "Announcements",
       "slug": "announcements",
-      "description": "Latest news and updates.",
-      "count": {
-        "posts": 5
-      }
+      "description": "Latest news and updates."
     },
     "tags": [
       {
         "id": "clt92hrnp000308l4ajp74b32",
         "name": "Tutorials",
         "slug": "tutorials",
-        "description": null,
-        "count": {
-          "posts": 12
-        }
+        "description": null
       }
     ],
     "attribution": null
@@ -84,14 +88,38 @@ fetch(
 ```
 </ResponseExample>
 
-### Path Parameters
+## Path Parameters
 
 <ParamField path="identifier" type="string" required>
-  The slug or id of the post to retrieve.
+  The unique identifier for the post. Can be either: - **slug** - The
+  URL-friendly post slug (e.g., `introducing-marblecms`) - **id** - The unique
+  post ID (e.g., `clt92n38p000108l48zkj41an`)
 </ParamField>
 
-### Query Parameters
+## Query Parameters
 
 <ParamField query="format" type="string">
-  The format of the content field in the response. Set to `markdown` to return the content as markdown instead of HTML.
+  Format of the `content` field in the response. | Value | Description |
+  |-------|-------------| | _(default)_ | HTML content as stored | | `markdown`
+  | Content converted to Markdown | ```bash curl -H "Authorization:
+  YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/posts/introducing-marblecms?format=markdown" ```
 </ParamField>
+
+## Error Responses
+
+<AccordionGroup>
+<Accordion title="Post not found (404)">
+```json
+{
+  "error": "Post not found",
+  "message": "The requested post does not exist or is not published"
+}
+```
+</Accordion>
+</AccordionGroup>
+
+<Tip>
+  Use the slug for human-readable URLs in your frontend, and the ID for internal
+  references where the slug might change.
+</Tip>

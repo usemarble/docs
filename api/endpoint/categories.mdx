@@ -1,18 +1,30 @@
 ---
 title: "Get All Categories"
-description: "Retrieves a list of all categories in a workspace."
+description: "Retrieves a paginated list of all categories in your workspace."
+api: "GET /v1/categories"
 ---
 
 <RequestExample>
 ```bash cURL
-curl "https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/categories"
+curl -H "Authorization: YOUR_API_KEY" "https://api.marblecms.com/v1/categories"
 ```
 
-```javascript Node.js
-fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/categories")
-  .then((res) => res.json())
-  .then((json) => console.log(json))
-  .catch((err) => console.error("error:" + err));
+```javascript JavaScript
+const response = await fetch("https://api.marblecms.com/v1/categories", {
+  headers: { Authorization: "YOUR_API_KEY" },
+});
+const data = await response.json();
+console.log(data.categories);
+```
+
+```python Python
+import requests
+
+response = requests.get(
+    "https://api.marblecms.com/v1/categories",
+    headers={"Authorization": "YOUR_API_KEY"}
+)
+print(response.json())
 ```
 
 </RequestExample>
@@ -51,3 +63,91 @@ fetch("https://api.marblecms.com/v1/cm6ytuq9x0000i803v0isidst/categories")
 }
 ```
 </ResponseExample>
+
+## Query Parameters
+
+<ParamField query="limit" type="integer" default="10">
+  Maximum number of categories per page. Range: `1-100`.
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  Page number to return.
+</ParamField>
+
+---
+
+## Get a Single Category
+
+Retrieve a specific category by its slug or ID, optionally including associated posts.
+
+```
+GET /v1/categories/:identifier
+```
+
+<RequestExample>
+```bash cURL
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/categories/tutorials"
+```
+
+```bash cURL (with posts)
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/categories/tutorials?include=posts"
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response (with posts)
+{
+  "id": "clt92hrnp000308l4ajp74b32",
+  "name": "Tutorials",
+  "slug": "tutorials",
+  "description": null,
+  "count": {
+    "posts": 12
+  },
+  "posts": {
+    "data": [
+      {
+        "id": "clt92n38p000108l48zkj41an",
+        "title": "Getting Started with Marble",
+        "slug": "getting-started-with-marble",
+        "description": "A beginner's guide to Marble CMS.",
+        "coverImage": "https://cdn.marblecms.com/images/cover.jpg",
+        "publishedAt": "2024-03-05T00:00:00.000Z"
+      }
+    ],
+    "pagination": {
+      "limit": 20,
+      "currentPage": 1,
+      "nextPage": null,
+      "previousPage": null,
+      "totalPages": 1,
+      "totalItems": 12
+    }
+  }
+}
+```
+</ResponseExample>
+
+### Path Parameters
+
+<ParamField path="identifier" type="string" required>
+  The category slug (e.g., `tutorials`) or ID.
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="include" type="string">
+  Include related data. Use `posts` to include posts in this category. ```
+  ?include=posts ```
+</ParamField>
+
+<ParamField query="limit" type="integer" default="20">
+  When `include=posts`, the maximum number of posts to return.
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  When `include=posts`, the page of posts to return.
+</ParamField>

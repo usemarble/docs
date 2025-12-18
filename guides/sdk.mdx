@@ -1,0 +1,59 @@
+---
+title: "SDK"
+description: "Official Marble SDKs for TypeScript and more."
+---
+
+Use our official SDKs for a streamlined development experience with full type safety and convenient helper methods.
+
+<Info>
+  We're actively developing official SDKs. In the meantime, you can use the
+  [REST API](/api/introduction) directly or import TypeScript types from
+  `@usemarble/core`.
+</Info>
+
+## TypeScript Types
+
+While we work on a full SDK, you can use our published TypeScript types for type-safe development:
+
+<CodeGroup>
+  ```bash npm npm install @usemarble/core ``` ```bash yarn yarn add
+  @usemarble/core ``` ```bash pnpm pnpm add @usemarble/core ``` ```bash bun bun
+  add @usemarble/core ```
+</CodeGroup>
+
+```typescript
+import type {
+  MarblePost,
+  MarbleCategory,
+  MarbleTag,
+  MarbleAuthor,
+  MarblePagination,
+} from "@usemarble/core";
+
+// Use types with fetch
+const response = await fetch("https://api.marblecms.com/v1/posts", {
+  headers: { Authorization: process.env.MARBLE_API_KEY },
+});
+const data: { posts: MarblePost[]; pagination: MarblePagination } =
+  await response.json();
+```
+
+For full type definitions, see the [TypeScript Types](/api/types) reference.
+
+---
+
+## Coming Soon
+
+We're building official SDKs with convenient methods, automatic retries, and built-in pagination helpers.
+
+<CardGroup cols={2}>
+  <Card title="TypeScript" icon="js">
+    Coming soon
+  </Card>
+</CardGroup>
+
+<Tip>
+  Want to be notified when SDKs are released? Follow us on
+  [X](https://x.com/usemarblecms) or join our
+  [Discord](https://discord.marblecms.com).
+</Tip>
