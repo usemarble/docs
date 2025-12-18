@@ -80,18 +80,14 @@ console.log(data.post);
 ## Path Parameters
 
 <ParamField path="identifier" type="string" required>
-  The unique identifier for the post. Can be either: - **slug** - The
-  URL-friendly post slug (e.g., `introducing-marblecms`) - **id** - The unique
-  post ID (e.g., `clt92n38p000108l48zkj41an`)
+  The post ID or slug.
 </ParamField>
 
 ## Query Parameters
 
 <ParamField query="format" type="string">
-  Format of the `content` field in the response. | Value | Description | |
-  Content converted to Markdown | ```bash curl -H "Authorization: Bearer
-  YOUR_API_KEY" \
-  "https://api.marblecms.com/v1/posts/introducing-marblecms?format=markdown" ```
+  Format of the `content` field in the response. - **Default:** HTML content as
+  stored - **`markdown`:** Content converted to Markdown
 </ParamField>
 
 ## Error Responses
