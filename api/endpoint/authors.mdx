@@ -6,25 +6,15 @@ api: "GET /v1/authors"
 
 <RequestExample>
 ```bash cURL
-curl -H "Authorization: YOUR_API_KEY" "https://api.marblecms.com/v1/authors"
+curl -H "Authorization: Bearer YOUR_API_KEY" "https://api.marblecms.com/v1/authors"
 ```
 
 ```javascript JavaScript
 const response = await fetch("https://api.marblecms.com/v1/authors", {
-  headers: { Authorization: "YOUR_API_KEY" },
+  headers: { Authorization: "Bearer YOUR_API_KEY" },
 });
 const data = await response.json();
 console.log(data.authors);
-```
-
-```python Python
-import requests
-
-response = requests.get(
-    "https://api.marblecms.com/v1/authors",
-    headers={"Authorization": "YOUR_API_KEY"}
-)
-print(response.json())
 ```
 
 </RequestExample>
@@ -66,6 +56,12 @@ print(response.json())
 }
 ```
 </ResponseExample>
+
+## Authorizations
+
+<ParamField header="Authorization" type="string" required>
+  Your Marble API key. Include it in the header as: `Bearer YOUR_API_KEY`
+</ParamField>
 
 ## Query Parameters
 

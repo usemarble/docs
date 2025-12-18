@@ -63,7 +63,7 @@ const key = process.env.MARBLE_API_KEY;
 export const getPosts = createServerFn().handler(async () => {
   try {
     const raw = await fetch("https://api.marblecms.com/v1/posts", {
-      headers: { Authorization: key },
+      headers: { Authorization: `Bearer ${key}` },
     });
     const data: MarblePostListResponse = await raw.json();
     return data;
@@ -75,7 +75,7 @@ export const getPosts = createServerFn().handler(async () => {
 export const getTags = createServerFn().handler(async () => {
   try {
     const raw = await fetch("https://api.marblecms.com/v1/tags", {
-      headers: { Authorization: key },
+      headers: { Authorization: `Bearer ${key}` },
     });
     const data: MarbleTagListResponse = await raw.json();
     return data;
@@ -89,7 +89,7 @@ export const getSinglePost = createServerFn()
   .handler(async ({ data: slug }) => {
     try {
       const raw = await fetch(`https://api.marblecms.com/v1/posts/${slug}`, {
-        headers: { Authorization: key },
+        headers: { Authorization: `Bearer ${key}` },
       });
       const data: MarblePostResponse = await raw.json();
       return data;
@@ -101,7 +101,7 @@ export const getSinglePost = createServerFn()
 export const getCategories = createServerFn().handler(async () => {
   try {
     const raw = await fetch("https://api.marblecms.com/v1/categories", {
-      headers: { Authorization: key },
+      headers: { Authorization: `Bearer ${key}` },
     });
     const data: MarbleCategoryListResponse = await raw.json();
     return data;
@@ -113,7 +113,7 @@ export const getCategories = createServerFn().handler(async () => {
 export const getAuthors = createServerFn().handler(async () => {
   try {
     const raw = await fetch("https://api.marblecms.com/v1/authors", {
-      headers: { Authorization: key },
+      headers: { Authorization: `Bearer ${key}` },
     });
     const data: MarbleAuthorListResponse = await raw.json();
     return data;
