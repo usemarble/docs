@@ -1,0 +1,77 @@
+---
+title: "Get a Single Author"
+description: "Retrieves a single author by their identifier (slug or id)."
+api: "GET /v1/authors/:identifier"
+---
+
+<RequestExample>
+```bash cURL
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/authors/john-doe"
+```
+
+```bash cURL (with posts)
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/authors/john-doe?include=posts"
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response (with posts)
+{
+  "id": "clt92f96m000008l4gken6v2t",
+  "name": "John Doe",
+  "slug": "john-doe",
+  "image": "https://cdn.marblecms.com/avatars/john.jpg",
+  "bio": "John is a software developer and writer.",
+  "role": "Software Developer",
+  "socials": [
+    { "url": "https://twitter.com/johndoe", "platform": "x" }
+  ],
+  "count": {
+    "posts": 15
+  },
+  "posts": {
+    "data": [
+      {
+        "id": "clt92n38p000108l48zkj41an",
+        "title": "Introducing Marble",
+        "slug": "introducing-marblecms",
+        "description": "The modern headless CMS.",
+        "coverImage": "https://cdn.marblecms.com/images/cover.jpg",
+        "publishedAt": "2024-03-05T00:00:00.000Z"
+      }
+    ],
+    "pagination": {
+      "limit": 20,
+      "currentPage": 1,
+      "nextPage": null,
+      "previousPage": null,
+      "totalPages": 1,
+      "totalItems": 15
+    }
+  }
+}
+```
+</ResponseExample>
+
+### Path Parameters
+
+<ParamField path="identifier" type="string" required>
+  The author slug (e.g., `john-doe`) or ID.
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="include" type="string">
+  Include related data. Use `posts` to include the author's posts.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="20">
+  When `include=posts`, the maximum number of posts to return.
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  When `include=posts`, the page of posts to return.
+</ParamField>

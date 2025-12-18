@@ -18,19 +18,17 @@ npx create-start-app@latest
 First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env` file in the root of your TanStack Start project and add the following:
 
 ```bash .env
-MARBLE_API_URL=https://api.marblecms.com/v1
-MARBLE_WORKSPACE_KEY=your_workspace_key_here
+MARBLE_API_KEY=your_api_key_here
 ```
 
 <Warning>
-  **Important:** Never expose your `MARBLE_WORKSPACE_KEY` in client-side code.
-  Your environment variables should only be accessed on the server during the
-  build process. For client-side updates, use
-  [webhooks](/guides/webhooks) to trigger rebuilds.
+  While public API keys are currently read-only, they should be used on the
+  server-side whenever possible to prevent your [rate limits](/api/rate-limits)
+  from being exhausted by others.
 </Warning>
 
 <Tip>
-You can find your Workspace Key in your Marble dashboard under the settings for your workspace.
+You can find your API Key in your Marble dashboard under **Settings > API Keys**.
 </Tip>
 </Step>
 
@@ -45,8 +43,8 @@ npm install zod
 
 <Note>
   For complete TypeScript type definitions, see our [TypeScript Types
-  reference](/api/types). The server functions below use these types for
-  full type safety.
+  reference](/api/types). The server functions below use these types for full
+  type safety.
 </Note>
 
 ```typescript lib/query.ts
@@ -60,12 +58,13 @@ import type {
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-const url = process.env.MARBLE_API_URL;
-const key = process.env.MARBLE_WORKSPACE_KEY;
+const key = process.env.MARBLE_API_KEY;
 
 export const getPosts = createServerFn().handler(async () => {
   try {
-    const raw = await fetch(`${url}/${key}/posts`);
+    const raw = await fetch("https://api.marblecms.com/v1/posts", {
+      headers: { Authorization: key },
+    });
     const data: MarblePostListResponse = await raw.json();
     return data;
   } catch (error) {
@@ -75,7 +74,9 @@ export const getPosts = createServerFn().handler(async () => {
 
 export const getTags = createServerFn().handler(async () => {
   try {
-    const raw = await fetch(`${url}/${key}/tags`);
+    const raw = await fetch("https://api.marblecms.com/v1/tags", {
+      headers: { Authorization: key },
+    });
     const data: MarbleTagListResponse = await raw.json();
     return data;
   } catch (error) {
@@ -87,7 +88,9 @@ export const getSinglePost = createServerFn()
   .inputValidator(z.string())
   .handler(async ({ data: slug }) => {
     try {
-      const raw = await fetch(`${url}/${key}/posts/${slug}`);
+      const raw = await fetch(`https://api.marblecms.com/v1/posts/${slug}`, {
+        headers: { Authorization: key },
+      });
       const data: MarblePostResponse = await raw.json();
       return data;
     } catch (error) {
@@ -97,7 +100,9 @@ export const getSinglePost = createServerFn()
 
 export const getCategories = createServerFn().handler(async () => {
   try {
-    const raw = await fetch(`${url}/${key}/categories`);
+    const raw = await fetch("https://api.marblecms.com/v1/categories", {
+      headers: { Authorization: key },
+    });
     const data: MarbleCategoryListResponse = await raw.json();
     return data;
   } catch (error) {
@@ -107,7 +112,9 @@ export const getCategories = createServerFn().handler(async () => {
 
 export const getAuthors = createServerFn().handler(async () => {
   try {
-    const raw = await fetch(`${url}/${key}/authors`);
+    const raw = await fetch("https://api.marblecms.com/v1/authors", {
+      headers: { Authorization: key },
+    });
     const data: MarbleAuthorListResponse = await raw.json();
     return data;
   } catch (error) {

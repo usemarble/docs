@@ -90,27 +90,33 @@
           {
             "group": "Get Started",
             "icon": "rocket",
-            "pages": ["api/introduction", "api/getting-started"]
-          },
-          {
-            "group": "Endpoints",
-            "icon": "square-terminal",
             "pages": [
-              "api/endpoint/posts",
-              "api/endpoint/post",
-              "api/endpoint/tags",
-              "api/endpoint/categories",
-              "api/endpoint/authors"
-            ]
-          },
-          {
-            "group": "Miscellaneous",
-            "icon": "circle-help",
-            "pages": [
+              "api/introduction",
+              "api/getting-started",
               "api/pagination",
               "api/rate-limits",
               "api/types"
             ]
+          },
+          {
+            "group": "Posts",
+            "icon": "file-text",
+            "pages": ["api/endpoint/posts", "api/endpoint/post"]
+          },
+          {
+            "group": "Authors",
+            "icon": "users",
+            "pages": ["api/endpoint/authors", "api/endpoint/author"]
+          },
+          {
+            "group": "Categories",
+            "icon": "folder",
+            "pages": ["api/endpoint/categories", "api/endpoint/category"]
+          },
+          {
+            "group": "Tags",
+            "icon": "tag",
+            "pages": ["api/endpoint/tags", "api/endpoint/tag"]
           }
         ]
       }

@@ -33,8 +33,10 @@ curl -H "Authorization: YOUR_API_KEY" https://api.marblecms.com/v1/posts
 </Steps>
 
 <Warning>
-  API keys are sensitive credentials. Never commit them to version control or
-  expose them in client-side code.
+  API keys should be kept secure. While public keys are read-only, exposing them
+  in client-side code can lead to your [rate limits](/api/rate-limits) being
+  consumed by others. We recommend performing API requests on the server-side
+  whenever possible.
 </Warning>
 
 ## Authentication

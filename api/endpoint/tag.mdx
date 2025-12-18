@@ -1,0 +1,72 @@
+---
+title: "Get a Single Tag"
+description: "Retrieves a single tag by its identifier (slug or id)."
+api: "GET /v1/tags/:identifier"
+---
+
+<RequestExample>
+```bash cURL
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/tags/product"
+```
+
+```bash cURL (with posts)
+curl -H "Authorization: YOUR_API_KEY" \
+  "https://api.marblecms.com/v1/tags/product?include=posts"
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response (with posts)
+{
+  "id": "clt92k3c1000408l47h5f0b5y",
+  "name": "Product",
+  "slug": "product",
+  "description": "All about product updates.",
+  "count": {
+    "posts": 8
+  },
+  "posts": {
+    "data": [
+      {
+        "id": "clt92n38p000108l48zkj41an",
+        "title": "Product Update: March 2024",
+        "slug": "product-update-march-2024",
+        "description": "What's new this month.",
+        "coverImage": "https://cdn.marblecms.com/images/cover.jpg",
+        "publishedAt": "2024-03-05T00:00:00.000Z"
+      }
+    ],
+    "pagination": {
+      "limit": 20,
+      "currentPage": 1,
+      "nextPage": null,
+      "previousPage": null,
+      "totalPages": 1,
+      "totalItems": 8
+    }
+  }
+}
+```
+</ResponseExample>
+
+### Path Parameters
+
+<ParamField path="identifier" type="string" required>
+  The tag slug (e.g., `product`) or ID.
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="include" type="string">
+  Include related data. Use `posts` to include posts with this tag.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="20">
+  When `include=posts`, the maximum number of posts to return.
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  When `include=posts`, the page of posts to return.
+</ParamField>
