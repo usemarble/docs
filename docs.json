@@ -21,10 +21,6 @@
     }
   },
   "favicon": "/favicon.svg",
-  "banner": {
-    "content": "New: We now offer a 7-day free trial for Marble Pro subscriptions.",
-    "dismissible": false
-  },
   "contextual": {
     "options": [
       "copy",
