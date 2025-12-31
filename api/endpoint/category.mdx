@@ -24,7 +24,7 @@ console.log(data);
 </RequestExample>
 
 <ResponseExample>
-```json Response (with posts)
+```json Response
 {
   "id": "clt92hrnp000308l4ajp74b32",
   "name": "Tutorials",
@@ -32,26 +32,6 @@ console.log(data);
   "description": null,
   "count": {
     "posts": 12
-  },
-  "posts": {
-    "data": [
-      {
-        "id": "clt92n38p000108l48zkj41an",
-        "title": "Getting Started with Marble",
-        "slug": "getting-started-with-marble",
-        "description": "A beginner's guide to Marble CMS.",
-        "coverImage": "https://cdn.marblecms.com/images/cover.jpg",
-        "publishedAt": "2024-03-05T00:00:00.000Z"
-      }
-    ],
-    "pagination": {
-      "limit": 20,
-      "currentPage": 1,
-      "nextPage": null,
-      "previousPage": null,
-      "totalPages": 1,
-      "totalItems": 12
-    }
   }
 }
 ```
@@ -71,14 +51,8 @@ console.log(data);
 
 ### Query Parameters
 
-<ParamField query="include" type="string">
-  Include related data. Use `posts` to include posts in this category.
-</ParamField>
-
-<ParamField query="limit" type="integer" default="20">
-  When `include=posts`, the maximum number of posts to return.
-</ParamField>
-
-<ParamField query="page" type="integer" default="1">
-  When `include=posts`, the page of posts to return.
-</ParamField>
+<Note>
+  This endpoint does not return posts. Use the [posts
+  endpoint](/api/endpoint/posts) with the `category` filter to retrieve posts by
+  category.
+</Note>
