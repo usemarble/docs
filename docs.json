@@ -84,6 +84,7 @@
       },
       {
         "tab": "API Reference",
+        "openapi": "https://api.marblecms.com/openapi.json",
         "groups": [
           {
             "group": "Get Started",
@@ -99,22 +100,22 @@
           {
             "group": "Posts",
             "icon": "file-text",
-            "pages": ["api/endpoint/posts", "api/endpoint/post"]
+            "pages": ["GET /v1/posts", "GET /v1/posts/{identifier}"]
           },
           {
             "group": "Authors",
             "icon": "users",
-            "pages": ["api/endpoint/authors", "api/endpoint/author"]
+            "pages": ["GET /v1/authors", "GET /v1/authors/{identifier}"]
           },
           {
             "group": "Categories",
             "icon": "folder",
-            "pages": ["api/endpoint/categories", "api/endpoint/category"]
+            "pages": ["GET /v1/categories", "GET /v1/categories/{identifier}"]
           },
           {
             "group": "Tags",
             "icon": "tag",
-            "pages": ["api/endpoint/tags", "api/endpoint/tag"]
+            "pages": ["GET /v1/tags", "GET /v1/tags/{identifier}"]
           }
         ]
       }
