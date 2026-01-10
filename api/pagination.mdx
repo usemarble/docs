@@ -67,7 +67,7 @@ Every paginated response includes a `pagination` object with the following field
 Get the first page with default limit (10 items):
 
 ```bash cURL
-curl -H "Authorization: Bearer YOUR_API_KEY" \
+curl -H "Authorization: YOUR_API_KEY" \
   "https://api.marblecms.com/v1/posts"
 ```
 
@@ -77,7 +77,7 @@ curl -H "Authorization: Bearer YOUR_API_KEY" \
 Get 5 items per page:
 
 ```bash cURL
-curl -H "Authorization: Bearer YOUR_API_KEY" \
+curl -H "Authorization: YOUR_API_KEY" \
   "https://api.marblecms.com/v1/posts?limit=5"
 ```
 
@@ -87,7 +87,7 @@ curl -H "Authorization: Bearer YOUR_API_KEY" \
 Get page 2 with 5 items per page:
 
 ```bash cURL
-curl -H "Authorization: Bearer YOUR_API_KEY" \
+curl -H "Authorization: YOUR_API_KEY" \
   "https://api.marblecms.com/v1/posts?page=2&limit=5"
 ```
 

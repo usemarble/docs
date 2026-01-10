@@ -73,11 +73,14 @@
               "guides/features/editor",
               "guides/features/media",
               "guides/features/webhooks",
-              "guides/features/import",
-              {
-                "group": "Extra",
-                "pages": ["guides/features/extra/reading-time"]
-              }
+              "guides/features/import"
+            ]
+          },
+          {
+            "group": "Recipes",
+            "icon": "book-open",
+            "pages": [
+              "guides/recipes/reading-time"
             ]
           }
         ]

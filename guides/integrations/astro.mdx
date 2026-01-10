@@ -5,11 +5,34 @@ description: "Integrate Marble in your Astro application"
 
 To integrate Marble in your Astro application, you first need an Astro site. If you don't have one, you can check out the [Astro documentation](https://docs.astro.build/en/tutorial/0-introduction/) to get started, or use our [Astro blog template](https://github.com/usemarble/astro-example) for a ready-to-go solution.
 
-Astro's **Content Collections** are the best way to manage content in your project. We'll use a **Content Loader** to fetch your posts from Marble and make them available in your Astro site with full type-safety. You can learn more about this in the [Astro Content Collections documentation](https://docs.astro.build/en/guides-collections/).
+Astro's **Content Collections** are the best way to manage content in your project. We'll use a **Content Loader** to fetch your posts from Marble and make them available in your Astro site with full type-safety. You can learn more about this in the [Astro Content Collections documentation](https://docs.astro.build/en/guides/content-collections/).
 
 <Steps>
+<Step title="Install the SDK">
+Install the Marble SDK in your Astro project:
+
+<CodeGroup>
+```bash npm
+npm install @usemarble/sdk
+```
+
+```bash pnpm
+pnpm add @usemarble/sdk
+```
+
+```bash yarn
+yarn add @usemarble/sdk
+```
+
+```bash bun
+bun add @usemarble/sdk
+```
+
+</CodeGroup>
+</Step>
+
 <Step title="Set up environment variables">
-First, add your Marble API URL and Workspace Key to your environment variables. Create a `.env` file in the root of your Astro project and add the following:
+Add your Marble API key to your environment variables. Create a `.env` file in the root of your Astro project:
 
 ```bash .env
 MARBLE_API_KEY="your_api_key_here"
@@ -27,76 +50,24 @@ You can find your API Key in your Marble dashboard under **Settings > API Keys**
 </Step>
 
 <Step title="Configure your content collection">
-Next, define your content collection. This tells Astro how to fetch and validate your data from Marble. Create a file named `src/config.ts` and add the following code.
+Define your content collection with a loader that uses the Marble SDK. Create a file named `src/content.config.ts`:
 
-This configuration defines a `posts` collection, and includes a loader function that fetches your posts from the Marble API.
+```typescript src/content.config.ts
+import { defineCollection } from "astro:content";
+import { Marble } from "@usemarble/sdk";
 
-<Note>
-  For complete TypeScript type definitions, see our [Types
-  reference](/api/types). The schema below matches the `Post` type from the API.
-</Note>
-
-```typescript src.config.ts
-import { z, defineCollection } from "astro:content";
-import type { MarblePostList } from "./types/marble";
-
-const key = import.meta.env.MARBLE_API_KEY;
-
-const PostSchema = z.object({
-  id: z.string(),
-  slug: z.string(),
-  title: z.string(),
-  content: z.string(),
-  featured: z.boolean(),
-  description: z.string(),
-  coverImage: z.string().url(),
-  publishedAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-  authors: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      slug: z.string(),
-      image: z.string().nullable(),
-      bio: z.string().nullable(),
-      role: z.string().nullable(),
-      socials: z.array(SocialSchema),
-    })
-  ),
-  category: z.object({
-    id: z.string(),
-    slug: z.string(),
-    name: z.string(),
-    description: z.string().nullable(),
-  }),
-  tags: z.array(
-    z.object({
-      id: z.string(),
-      slug: z.string(),
-      name: z.string(),
-      description: z.string().nullable(),
-    })
-  ),
-  attribution: z
-    .object({
-      author: z.string(),
-      url: z.string().url(),
-    })
-    .nullable(),
+const marble = new Marble({
+  apiKey: import.meta.env.MARBLE_API_KEY,
 });
 
-type Post = z.infer<typeof PostSchema>;
-
 const postsCollection = defineCollection({
-  schema: PostSchema,
   loader: async () => {
-    const response = await fetch("https://api.marblecms.com/v1/posts", {
-      headers: {
-        Authorization: `Bearer ${key}`,
-      },
-    });
-    const { posts }: MarblePostList = await response.json();
+    const result = await marble.posts.list({ limit: 100 });
+    const data = await result.next();
+    const posts = data.value?.posts ?? [];
+
     return posts.map((post) => ({
+      id: post.id,
       ...post,
     }));
   },
@@ -107,10 +78,14 @@ export const collections = {
 };
 ```
 
+<Tip>
+  The SDK provides full TypeScript types out of the box, so you get type-safety
+  without needing to define your own schemas.
+</Tip>
 </Step>
 
 <Step title="Display a list of posts">
-Now, you can use `getCollection()` to fetch all your posts and display them on a page. Create a file at `src/pages/blog/index.astro` to list all your posts.
+Use `getCollection()` to fetch all your posts and display them on a page. Create a file at `src/pages/blog/index.astro`:
 
 ```astro src/pages/blog/index.astro
 ---
@@ -125,7 +100,7 @@ const posts = await getCollection('posts');
   <ul>
     {posts.map((post) => (
       <li>
-        <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
       </li>
     ))}
   </ul>
@@ -135,9 +110,7 @@ const posts = await getCollection('posts');
 </Step>
 
 <Step title="Display a single post">
-To display individual posts, create a dynamic route that fetches a single post based on its slug. Create a file at `src/pages/blog/[...slug].astro`.
-
-This page uses `getStaticPaths()` to generate a static page for every post at build time.
+Create a dynamic route at `src/pages/blog/[...slug].astro` to display individual posts:
 
 ```astro src/pages/blog/[...slug].astro
 ---
@@ -147,7 +120,7 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.data.slug },
     props: { entry },
   }));
 }

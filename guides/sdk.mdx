@@ -1,72 +1,202 @@
 ---
-title: "SDK"
+title: "TypeScript SDK"
 description: "Official Marble SDK for TypeScript."
 ---
 
-Use our official SDK for a streamlined development experience with full type safety and convenient helper methods.
+Developer-friendly & type-safe TypeScript SDK for the Marble API. Built with automatic retries, pagination helpers, and full TypeScript support.
 
-<Info>
-  We're actively developing official SDKs. In the meantime, you can use the
-  [REST API](/api/introduction) directly or import TypeScript types from
-  `@usemarble/core`.
-</Info>
-
-## TypeScript Types
-
-While we work on a full SDK, you can use our published TypeScript types for type-safe development:
+## Installation
 
 <CodeGroup>
-  ```bash npm
-  npm install @usemarble/core
-  ```
-
-```bash yarn
-yarn add @usemarble/core
+```bash npm
+npm install @usemarble/sdk
 ```
 
 ```bash pnpm
-pnpm add @usemarble/core
+pnpm add @usemarble/sdk
+```
+
+```bash yarn
+yarn add @usemarble/sdk
 ```
 
 ```bash bun
-bun add @usemarble/core
+bun add @usemarble/sdk
 ```
 
 </CodeGroup>
 
-```typescript
-import type {
-  MarblePost,
-  MarbleCategory,
-  MarbleTag,
-  MarbleAuthor,
-  MarblePagination,
-} from "@usemarble/core";
+<Note>
+  This package is published with CommonJS and ES Modules (ESM) support.
+</Note>
 
-// Use types with fetch
-const response = await fetch("https://api.marblecms.com/v1/posts", {
-  headers: { Authorization: `Bearer ${process.env.MARBLE_API_KEY}` },
+## Quick Start
+
+```typescript
+import { Marble } from "@usemarble/sdk";
+
+const marble = new Marble({
+  apiKey: process.env["MARBLE_API_KEY"] ?? "",
 });
-const data: { posts: MarblePost[]; pagination: MarblePagination } =
-  await response.json();
+
+async function run() {
+  const result = await marble.posts.list({
+    limit: 10,
+    page: 1,
+  });
+
+  for await (const page of result) {
+    console.log(page);
+  }
+}
+
+run();
 ```
 
-For full type definitions, see the [TypeScript Types](/api/types) reference.
+## Authentication
 
----
+The SDK uses API key authentication. Pass your API key when initializing the client:
 
-## Coming Soon
+```typescript
+import { Marble } from "@usemarble/sdk";
 
-We're building official SDKs with convenient methods, automatic retries, and built-in pagination helpers.
+const marble = new Marble({
+  apiKey: process.env["MARBLE_API_KEY"] ?? "",
+});
+```
+
+<Tip>
+  Set the `MARBLE_API_KEY` environment variable and the SDK will automatically
+  use it.
+</Tip>
+
+## Available Resources
 
 <CardGroup cols={2}>
-  <Card title="TypeScript" icon="js">
-    Coming soon
+<Card title="Posts" icon="file-text">
+  - List all posts
+  - Get a single post
+</Card>
+
+<Card title="Categories" icon="folder">
+  - List all categories
+  - Get a single category
+</Card>
+
+<Card title="Tags" icon="tag">
+  - List all tags
+  - Get a single tag
+</Card>
+
+<Card title="Authors" icon="users">
+  - List all authors
+  - Get a single author
+</Card>
+</CardGroup>
+
+## Filtering Posts
+
+Filter posts by categories, or tags:
+
+```typescript
+const result = await marble.posts.list({
+  limit: 10,
+  page: 1,
+  categories: "tech,news", // Include posts in these categories
+  excludeCategories: "drafts", // Exclude posts in these categories
+  tags: "javascript,react", // Include posts with these tags
+  excludeTags: "outdated", // Exclude posts with these tags
+  format: "html", // Content format
+});
+```
+
+## Pagination
+
+Paginated endpoints return an async iterable. Use `for await...of` to iterate through pages:
+
+```typescript
+const result = await marble.posts.list({
+  limit: 10,
+  page: 1,
+});
+
+for await (const page of result) {
+  // Each page contains posts and pagination metadata
+  console.log(page.posts);
+  console.log(page.pagination);
+}
+```
+
+## Error Handling
+
+The SDK provides typed error classes for different error scenarios:
+
+```typescript
+import { Marble } from "@usemarble/sdk";
+import * as errors from "@usemarble/sdk/models/errors";
+
+const marble = new Marble({
+  apiKey: process.env["MARBLE_API_KEY"] ?? "",
+});
+
+try {
+  const result = await marble.posts.get("non-existent-slug");
+} catch (error) {
+  if (error instanceof errors.NotFoundError) {
+    console.log("Post not found");
+  } else if (error instanceof errors.MarbleError) {
+    console.log(error.message);
+    console.log(error.statusCode);
+  }
+}
+```
+
+## Retries
+
+The SDK automatically retries failed requests. You can customize retry behavior:
+
+```typescript
+const marble = new Marble({
+  apiKey: process.env["MARBLE_API_KEY"] ?? "",
+  retryConfig: {
+    strategy: "backoff",
+    backoff: {
+      initialInterval: 1,
+      maxInterval: 50,
+      exponent: 1.1,
+      maxElapsedTime: 100,
+    },
+    retryConnectionErrors: false,
+  },
+});
+```
+
+## Framework Guides
+
+<CardGroup cols={3}>
+  <Card title="Next.js" icon="react" href="/guides/integrations/nextjs">
+    Build static and server-rendered pages.
+  </Card>
+
+{" "}
+
+<Card title="Astro" icon="star" href="/guides/integrations/astro">
+  Use Content Collections with Astro.
+</Card>
+
+  <Card title="TanStack Start" icon="layer-group" href="/guides/integrations/tanstack">
+    Server functions with TanStack Start.
   </Card>
 </CardGroup>
 
-<Tip>
-  Want to be notified when SDKs are released? Follow us on
-  [X](https://x.com/usemarblecms) or join our
-  [Discord](https://discord.marblecms.com).
-</Tip>
+## Additional Resources
+
+<CardGroup cols={2}>
+  <Card title="NPM Package" icon="npm" href="https://www.npmjs.com/package/@usemarble/sdk">
+    View the package on npm.
+  </Card>
+
+  <Card title="GitHub" icon="github" href="https://github.com/usemarble/marble-ts">
+    View the source code.
+  </Card>
+</CardGroup>

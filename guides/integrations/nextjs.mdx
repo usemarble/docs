@@ -3,13 +3,36 @@ title: "Next.js"
 description: "Integrate Marble in your Next.js application"
 ---
 
-Getting your content to your Next.js site is as simple as making an API request to the Marble API. This guide will walk you through setting up a blog with Marble and Next.js.
+Getting your content to your Next.js site is as simple as using the Marble SDK. This guide will walk you through setting up a blog with Marble and Next.js.
 
 If you want to get started quickly, you can clone our [Next.js blog template](https://github.com/usemarble/nextjs-example).
 
 <Steps>
+<Step title="Install the SDK">
+Install the Marble SDK in your Next.js project:
+
+<CodeGroup>
+```bash npm
+npm install @usemarble/sdk
+```
+
+```bash pnpm
+pnpm add @usemarble/sdk
+```
+
+```bash yarn
+yarn add @usemarble/sdk
+```
+
+```bash bun
+bun add @usemarble/sdk
+```
+
+</CodeGroup>
+</Step>
+
 <Step title="Set up environment variables">
-First, you'll need to add your Marble API URL and Workspace Key to your environment variables. Create a `.env.local` file in the root of your Next.js project and add the following:
+Add your Marble API key to your environment variables. Create a `.env.local` file in the root of your Next.js project:
 
 ```bash .env.local
 MARBLE_API_KEY=your_api_key_here
@@ -26,102 +49,34 @@ You can find your API Key in your Marble dashboard under **Settings > API Keys**
 </Tip>
 </Step>
 
-<Step title="Create API utility functions">
-To make it easier to fetch data from Marble, you can create a utility file to wrap your API calls. This keeps your data-fetching logic organized and reusable.
+<Step title="Create a Marble client">
+Create a shared Marble client instance. Create a file at `lib/marble.ts`:
 
-Create a file at `lib/query.ts` (or `.js` if you're using JavaScript).
+```typescript lib/marble.ts
+import { Marble } from "@usemarble/sdk";
 
-<Note>
-  For complete TypeScript type definitions, see our [TypeScript Types
-  reference](/api/types). The server functions below use these types for full
-  type safety.
-</Note>
-
-```typescript lib/query.ts
-import type {
-  MarbleAuthorListResponse,
-  MarbleCategoryListResponse,
-  MarblePostResponse,
-  MarblePostList,Response
-  MarbleTagListResponse,
-} from "@/types/marble";
-
-const key = process.env.MARBLE_API_KEY;
-
-export async function getPosts() {
-  try {
-    const raw = await fetch("https://api.marblecms.com/v1/posts", {
-      headers: { Authorization: `Bearer ${key}` },
-    });
-    const data: MarblePostListResponse = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getTags() {
-  try {
-    const raw = await fetch("https://api.marblecms.com/v1/tags", {
-      headers: { Authorization: `Bearer ${key },
-    });
-    const data: MarbleTagListResponse = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getSinglePost(slug: string) {
-  try {
-    const raw = await fetch(`https://api.marblecms.com/v1/posts/${slug}`, {
-      headers: { Authorization: `Bearer ${key },
-    });
-    const data: MarblePostResponse = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getCategories() {
-  try {
-    const raw = await fetch("https://api.marblecms.com/v1/categories", {
-      headers: { Authorization: `Bearer ${key },
-    });
-    const data: MarbleCategoryListResponse = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getAuthors() {
-  try {
-    const raw = await fetch("https://api.marblecms.com/v1/authors", {
-      headers: { Authorization: `Bearer ${key },
-    });
-    const data: MarbleAuthorListResponse = await raw.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
+export const marble = new Marble({
+  apiKey: process.env["MARBLE_API_KEY"] ?? "",
+});
 ```
 
 </Step>
 
 <Step title="Display a list of posts">
-Now you can use the `getPosts` function in a Next.js page to fetch and display a list of your blog posts. For example, in `app/blog/page.jsx`:
+Use the Marble client in a Next.js page to fetch and display your posts:
 
-```jsx app/blog/page.jsx
-import { getPosts } from "@/lib/query";
+```tsx app/blog/page.tsx
+import { marble } from "@/lib/marble";
 
 // Revalidate this page every hour
 export const revalidate = 3600;
 
 export default async function BlogPage() {
-  const { posts } = await getPosts();
+  const result = await marble.posts.list({ limit: 10 });
+
+  // Get the first page of results
+  const data = await result.next();
+  const posts = data.value?.posts ?? [];
 
   return (
     <section>
@@ -140,13 +95,18 @@ export default async function BlogPage() {
 </Step>
 
 <Step title="Display a single post">
-To display a single post, you can create a dynamic route in Next.js, for example at `app/blog/[slug]/page.jsx`. This page will use the `getSinglePost` function to fetch the content for a specific post.
+Create a dynamic route at `app/blog/[slug]/page.tsx` to display individual posts:
 
-```jsx app/blog/[slug]/page.jsx
-import { getSinglePost } from "@/lib/query";
+```tsx app/blog/[slug]/page.tsx
+import { marble } from "@/lib/marble";
 
-export default async function PostPage({ params }) {
-  const { post } = await getSinglePost(params.slug);
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const { post } = await marble.posts.get({ identifier: slug });
 
   return (
     <div>
@@ -227,12 +187,17 @@ export function Prose({ children, html, className }: ProseProps) {
 
 Now you can update your post page to use the `Prose` component:
 
-```jsx app/blog/[slug]/page.jsx
-import { getSinglePost } from "@/lib/query";
+```tsx app/blog/[slug]/page.tsx
+import { marble } from "@/lib/marble";
 import { Prose } from "@/components/prose";
 
-export default async function PostPage({ params }) {
-  const { post } = await getSinglePost(params.slug);
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const { post } = await marble.posts.get({ identifier: slug });
 
   return (
     <div>
