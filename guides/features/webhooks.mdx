@@ -9,10 +9,13 @@ Webhooks provide a powerful way to keep your site's content fresh and automate w
 
 <CardGroup cols={2}>
   <Card title="Content Revalidation" icon="rotate">
-    For statically generated sites (SSG) built with frameworks like Next.js, Astro, or Nuxt, content is fetched when you build your site. Webhooks allow you to trigger instant revalidation when content changes.
+    For statically generated sites (SSG) built with frameworks like Next.js,
+    Astro, or Nuxt, content is fetched when you build your site. Webhooks allow
+    you to trigger instant revalidation when content changes.
   </Card>
   <Card title="Automating Workflows" icon="bolt">
-    Automate tasks like sending newsletters, sharing on social media, or syncing content to other services when posts are published or updated.
+    Automate tasks like sending newsletters, sharing on social media, or syncing
+    content to other services when posts are published or updated.
   </Card>
 </CardGroup>
 
@@ -36,17 +39,18 @@ Create a serverless function that listens for a `post.published` event from a Ma
   <Step title="Navigate to Webhooks">
     On the Marble dashboard, go to the **Webhooks** section.
   </Step>
-  
+
   <Step title="Create a New Webhook">
-    Click **Create Webhook** and fill in the required details:
-    - **Name**: A descriptive name for your webhook
-    - **URL**: The endpoint where the webhook payload will be sent
-    - **Format**: Choose the payload format (currently only JSON is supported)
-    - **Events**: Select the events you want to listen for (e.g., `post.published`, `post.updated`)
+    Click **Create Webhook** and fill in the required details: - **Name**: A
+    descriptive name for your webhook - **URL**: The endpoint where the webhook
+    payload will be sent - **Format**: Choose the payload format (currently only
+    JSON is supported) - **Events**: Select the events you want to listen for
+    (e.g., `post.published`, `post.updated`)
   </Step>
-  
+
   <Step title="Save and Copy Secret">
-    Save your webhook, then click the 3 dots on the top right and select **Copy secret**. You'll need this to verify the authenticity of incoming requests.
+    Save your webhook, then click the 3 dots on the top right and select **Copy
+    secret**. You'll need this to verify the authenticity of incoming requests.
   </Step>
 </Steps>
 
@@ -54,11 +58,7 @@ Create a serverless function that listens for a `post.published` event from a Ma
 
 To ensure that incoming webhook requests are from Marble and haven't been tampered with, you can verify the request using the webhook secret.
 
-<Tip>
-  We published an official npm package, `@usemarble/core`, which exports a `verifyMarbleSignature` helper. Install it with `npm install @usemarble/core` to skip manual verification code.
-</Tip>
-
-Here's an example of how to verify a webhook request in Next.js using the `crypto` module (or use `verifyMarbleSignature` from `@usemarble/core` instead of copying this function):
+Here's an example of how to verify a webhook request in Next.js using the `crypto` module:
 
 ```typescript
 // lib/marble/webhook.ts
@@ -94,11 +94,17 @@ export async function handleWebhookEvent(payload: PostEventData) {
   };
 }
 
-export function verifySignature(secret: string, signatureHeader: string, bodyText: string) {
+export function verifySignature(
+  secret: string,
+  signatureHeader: string,
+  bodyText: string
+) {
   // Strip possible "sha256=" prefix
   const expectedHex = signatureHeader.replace(/^sha256=/, "");
 
-  const computedHex = createHmac("sha256", secret).update(bodyText).digest("hex");
+  const computedHex = createHmac("sha256", secret)
+    .update(bodyText)
+    .digest("hex");
 
   // Convert to buffers for constant-time compare
   const expected = Buffer.from(expectedHex, "hex");
@@ -122,7 +128,10 @@ export async function POST(request: Request) {
   const secret = process.env.MARBLE_WEBHOOK_SECRET;
 
   if (!secret || !signature) {
-    return NextResponse.json({ error: "Secret or signature missing" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Secret or signature missing" },
+      { status: 400 }
+    );
   }
 
   const bodyText = await request.text();
@@ -135,7 +144,7 @@ export async function POST(request: Request) {
   if (!payload.event || !payload.data) {
     return Response.json(
       { error: "Invalid payload structure" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -143,12 +152,19 @@ export async function POST(request: Request) {
     const result = await handleWebhookEvent(payload);
     return NextResponse.json(result);
   } catch (err) {
-    return NextResponse.json({ error: "Failed to process webhook" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to process webhook" },
+      { status: 500 }
+    );
   }
 }
 ```
 
-<Note>If you want a better guide on how to invalidate cache in your framework of choice, you can check out our blog post on [Using Marble's Webhooks with the Next.js App Router](https://marblecms.com/blog/nextjs-webhooks-with-marble).</Note>
+<Note>
+  If you want a better guide on how to invalidate cache in your framework of
+  choice, you can check out our blog post on [Using Marble's Webhooks with the
+  Next.js App Router](https://marblecms.com/blog/nextjs-webhooks-with-marble).
+</Note>
 
 Marble will send the signature in the `x-marble-signature` header of the request. You can use this signature to verify the authenticity of the request. Make sure to add the `process.env.MARBLE_WEBHOOK_SECRET` environment variable.
 
@@ -182,11 +198,13 @@ Here's an example payload for a `tag.deleted` event:
   }
 }
 ```
+
 This structure is consistent across almost all different event types, with an exeption for `media.*` events, which include a `name` field instead of the `slug`.
 
 ## Event Types
 
 Marble supports a variety of event types that you can listen for with webhooks. Here are the currently available events:
+
 - `post.published`: Triggered when a post is published.
 - `post.updated`: Triggered when a post is updated.
 - `post.deleted`: Triggered when a post is deleted.
