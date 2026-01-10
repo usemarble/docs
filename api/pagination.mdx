@@ -94,6 +94,67 @@ curl -H "Authorization: YOUR_API_KEY" \
 </Tab>
 </Tabs>
 
+## SDK Examples
+
+<Tabs>
+<Tab title="Basic Pagination">
+Fetch posts with pagination options:
+
+```typescript
+import { Marble } from "@usemarble/sdk";
+
+const marble = new Marble({
+  apiKey: process.env["MARBLE_API_KEY"] ?? "",
+});
+
+const result = await marble.posts.list({
+  limit: 10,
+  page: 1,
+});
+```
+
+</Tab>
+
+<Tab title="Iterate All Pages">
+The SDK returns an async iterable for paginated endpoints:
+
+```typescript
+const result = await marble.posts.list({ limit: 10 });
+
+for await (const page of result) {
+  console.log(page.posts);
+  console.log(page.pagination.currentPage);
+}
+```
+
+</Tab>
+
+<Tab title="Pagination Controls">
+Use the pagination response to build navigation UI:
+
+```typescript
+const result = await marble.posts.list({ limit: 10, page: 1 });
+
+for await (const page of result) {
+  const { pagination } = page;
+
+  // Use these for your pagination UI
+  const canGoBack = pagination.previousPage !== null;
+  const canGoForward = pagination.nextPage !== null;
+  const pageInfo = `Page ${pagination.currentPage} of ${pagination.totalPages}`;
+  const itemCount = `${pagination.totalItems} total items`;
+}
+```
+
+</Tab>
+</Tabs>
+
+<Tip>
+  The SDK's async iterable automatically handles fetching subsequent pages. If
+  you only need a single page (e.g., for pagination controls), iterate once and
+  break.
+</Tip>
+
 <ResponseExample>
 ```json Success Response
 {
@@ -209,6 +270,12 @@ The following endpoints support pagination:
   navigation controls. These fields will be `null` when navigation in that
   direction isn't possible.
 </Note>
+
+<Tip>
+  **Building Pagination UI**: The `pagination` object in every response gives
+  you everything needed for pagination controls: current page, total pages, and
+  next/previous page numbers.
+</Tip>
 
 ## Error Handling
 

@@ -97,6 +97,7 @@
               "api/introduction",
               "api/getting-started",
               "api/pagination",
+              "api/filtering",
               "api/rate-limits",
               "api/types"
             ]

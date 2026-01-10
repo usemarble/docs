@@ -96,19 +96,19 @@ const marble = new Marble({
 
 ## Filtering Posts
 
-Filter posts by categories, or tags:
+Filter posts by categories, tags, or featured status:
 
 ```typescript
 const result = await marble.posts.list({
-  limit: 10,
-  page: 1,
-  categories: "tech,news", // Include posts in these categories
-  excludeCategories: "drafts", // Exclude posts in these categories
-  tags: "javascript,react", // Include posts with these tags
-  excludeTags: "outdated", // Exclude posts with these tags
-  format: "html", // Content format
+  featured: "true",
+  categories: "tech,news",
+  excludeCategories: "drafts",
+  tags: "javascript,react",
+  excludeTags: "outdated",
 });
 ```
+
+For a complete guide on filtering options and behavior, see the [Filtering documentation](/api/filtering).
 
 ## Pagination
 
@@ -121,11 +121,12 @@ const result = await marble.posts.list({
 });
 
 for await (const page of result) {
-  // Each page contains posts and pagination metadata
   console.log(page.posts);
   console.log(page.pagination);
 }
 ```
+
+For full pagination details and response fields, see the [Pagination documentation](/api/pagination).
 
 ## Error Handling
 
