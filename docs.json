@@ -80,7 +80,8 @@
             "group": "Recipes",
             "icon": "book-open",
             "pages": [
-              "guides/recipes/reading-time"
+              "guides/recipes/reading-time",
+              "guides/recipes/code-highlighting"
             ]
           }
         ]
