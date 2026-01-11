@@ -64,7 +64,7 @@ const marble = new Marble({
 });
 
 const result = await marble.posts.list({
-  categories: "tutorials",
+  categories: ["tutorials"],
 });
 
 for await (const page of result) {
@@ -85,7 +85,7 @@ const marble = new Marble({
 });
 
 const result = await marble.posts.list({
-  excludeCategories: "changelog,legal",
+  excludeCategories: ["changelog", "legal"],
 });
 
 for await (const page of result) {
@@ -106,7 +106,7 @@ const marble = new Marble({
 });
 
 const result = await marble.posts.list({
-  tags: "javascript,typescript",
+  tags: ["javascript", "typescript"],
 });
 
 for await (const page of result) {
@@ -127,8 +127,8 @@ const marble = new Marble({
 });
 
 const result = await marble.posts.list({
-  categories: "tutorials",
-  excludeTags: "outdated,deprecated",
+  categories: ["tutorials"],
+  excludeTags: ["outdated", "deprecated"],
 });
 
 for await (const page of result) {
@@ -264,7 +264,7 @@ Exclude system pages like legal and changelog:
 
 ```typescript
 await marble.posts.list({
-  excludeCategories: "legal,changelog",
+  excludeCategories: ["legal", "changelog"],
 });
 ```
 
@@ -286,7 +286,7 @@ Exclude outdated posts:
 
 ```typescript
 await marble.posts.list({
-  excludeTags: "outdated,archived",
+  excludeTags: ["outdated", "archived"],
 });
 ```
 
@@ -297,7 +297,7 @@ Category + search combo:
 
 ```typescript
 await marble.posts.list({
-  categories: "tutorials",
+  categories: ["tutorials"],
   query: "react hooks",
 });
 ```
