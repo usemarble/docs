@@ -105,22 +105,46 @@
           {
             "group": "Posts",
             "icon": "file-text",
-            "pages": ["GET /v1/posts", "GET /v1/posts/{identifier}"]
+            "pages": [
+              "GET /v1/posts",
+              "GET /v1/posts/{identifier}",
+              "POST /v1/posts",
+              "PATCH /v1/posts/{identifier}",
+              "DELETE /v1/posts/{identifier}"
+            ]
           },
           {
             "group": "Authors",
             "icon": "users",
-            "pages": ["GET /v1/authors", "GET /v1/authors/{identifier}"]
+            "pages": [
+              "GET /v1/authors",
+              "GET /v1/authors/{identifier}",
+              "POST /v1/authors",
+              "PATCH /v1/authors/{identifier}",
+              "DELETE /v1/authors/{identifier}"
+            ]
           },
           {
             "group": "Categories",
             "icon": "folder",
-            "pages": ["GET /v1/categories", "GET /v1/categories/{identifier}"]
+            "pages": [
+              "GET /v1/categories",
+              "GET /v1/categories/{identifier}",
+              "POST /v1/categories",
+              "PATCH /v1/categories/{identifier}",
+              "DELETE /v1/categories/{identifier}"
+            ]
           },
           {
             "group": "Tags",
             "icon": "tag",
-            "pages": ["GET /v1/tags", "GET /v1/tags/{identifier}"]
+            "pages": [
+              "GET /v1/tags",
+              "GET /v1/tags/{identifier}",
+              "POST /v1/tags",
+              "PATCH /v1/tags/{identifier}",
+              "DELETE /v1/tags/{identifier}"
+            ]
           }
         ]
       }
