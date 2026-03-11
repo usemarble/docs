@@ -1,5 +1,7 @@
 # Marble Documentation
 
+> **This repository is archived.** To make changes to the docs, go to the main monorepo: [here](https://github.com/usemarble/marble/tree/main/apps/docs)
+
 Documentation for Marble and its API built with [Mintlify](https://mintlify.com).
 
 ## Project Structure
